@@ -1,7 +1,0 @@
-{
-  "mappings": [
-    "/content/agentic/:/",
-    "/content/agentic/metadata:/metadata.json",
-    "/content/agentic/configuration:/.helix/config.json"
-  ]
-}
