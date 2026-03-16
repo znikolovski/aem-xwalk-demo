@@ -1,6 +1,7 @@
 /* header and nav layout */
 header .nav-wrapper {
-  background-color: var(--background-color);
+  background-color: var(--dark-color);
+  color: #fff;
   width: 100%;
   z-index: 2;
   position: fixed;
@@ -52,6 +53,7 @@ header nav p {
 
 header nav a:any-link {
   color: currentcolor;
+  text-decoration: none;
 }
 
 /* hamburger */
@@ -68,7 +70,7 @@ header nav .nav-hamburger button {
   border: 0;
   border-radius: 0;
   padding: 0;
-  background-color: var(--background-color);
+  background-color: transparent;
   color: inherit;
   overflow: initial;
   text-overflow: initial;
@@ -135,13 +137,35 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
   }
 }
 
-/* brand */
+/* brand / ANZ logo */
 header .nav-brand {
   grid-area: brand;
-  flex-basis: 128px;
-  font-size: var(--heading-font-size-s);
+  flex-shrink: 0;
+  font-size: 22px;
   font-weight: 700;
   line-height: 1;
+  letter-spacing: 1px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+header .nav-brand a {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* ANZ sparkle dots after logo */
+header .nav-brand a::after {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle at 30% 30%, #009fda 2px, transparent 2px),
+    radial-gradient(circle at 70% 20%, #009fda 1.5px, transparent 1.5px),
+    radial-gradient(circle at 60% 70%, #009fda 1px, transparent 1px);
+  margin-left: 2px;
 }
 
 header nav .nav-brand img {
@@ -149,7 +173,7 @@ header nav .nav-brand img {
   height: auto;
 }
 
-/* sections */
+/* sections / main nav links */
 header nav .nav-sections {
   grid-area: sections;
   flex: 1 1 auto;
@@ -166,11 +190,11 @@ header nav[aria-expanded='true'] .nav-sections {
 header nav .nav-sections ul {
   list-style: none;
   padding-left: 0;
-  font-size: var(--body-font-size-s);
+  font-size: 15px;
 }
 
 header nav .nav-sections ul > li {
-  font-weight: 500;
+  font-weight: 400;
 }
 
 header nav .nav-sections ul > li > ul {
@@ -192,6 +216,25 @@ header nav .nav-sections ul > li > ul > li {
     align-self: unset;
   }
 
+  header nav .nav-sections > ul {
+    display: flex;
+    gap: 24px;
+    margin: 0;
+  }
+
+  header nav .nav-sections > ul > li {
+    flex: 0 1 auto;
+    position: relative;
+    padding: 4px 0;
+  }
+
+  /* Active/current nav item underline */
+  header nav .nav-sections > ul > li:first-child {
+    font-weight: 700;
+    border-bottom: 2px solid #fff;
+  }
+
+  /* Dropdown trigger */
   header nav .nav-sections .nav-drop {
     position: relative;
     padding-right: 16px;
@@ -218,62 +261,123 @@ header nav .nav-sections ul > li > ul > li {
     transform: rotate(315deg);
   }
 
-  header nav .nav-sections ul {
-    display: flex;
-    gap: 24px;
-    margin: 0;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li {
-    flex: 0 1 auto;
-    position: relative;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li > ul {
+  /* Mega menu dropdown */
+  header nav .nav-sections > ul > li > ul {
     display: none;
     position: relative;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
-    display: block;
+  header nav .nav-sections > ul > li[aria-expanded='true'] > ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px 32px;
     position: absolute;
-    left: -24px;
-    width: 200px;
+    left: -120px;
+    width: 640px;
     top: 150%;
-    padding: 16px;
-    background-color: var(--light-color);
+    padding: 24px 32px;
+    background-color: #fff;
+    color: var(--text-color);
     white-space: initial;
-    z-index: 1;
+    z-index: 10;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
+  header nav .nav-sections > ul > li > ul::before {
     content: '';
     position: absolute;
     top: -8px;
-    left: 16px;
+    left: 130px;
     width: 0;
     height: 0;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
-    border-bottom: 8px solid var(--light-color);
+    border-bottom: 8px solid #fff;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-sections > ul > li > ul > li {
     padding: 8px 0;
   }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-sections > ul > li > ul > li a {
+    color: var(--link-color);
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-sections > ul > li > ul > li a:hover {
+    text-decoration: underline;
+  }
 }
 
-/* tools */
+/* tools (search, login, etc.) */
 header nav .nav-tools {
   grid-area: tools;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-header nav .nav-tools .button {
-  margin: 0;
-  border: none;
-  padding: 0.5em;
-  background: none;
-  line-height: 0;
+header nav .nav-tools p {
+  display: flex;
+  align-items: center;
+}
+
+/* Search icon */
+header nav .nav-tools a[href*="locations"],
+header nav .nav-tools a[href*="support"] {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+header nav .nav-tools a:hover {
+  opacity: 1;
+}
+
+/* Login button styling */
+/* stylelint-disable-next-line no-descending-specificity */
+header nav a.nav-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #fff;
+  color: var(--dark-color);
+  padding: 6px 16px;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+header nav a.nav-login:hover {
+  background-color: #e8e8e8;
+  color: var(--dark-color);
+  text-decoration: none;
+}
+
+/* Search icon */
+header .nav-search-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+
+header .nav-search-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
 }
 
 /* breadcrumbs */

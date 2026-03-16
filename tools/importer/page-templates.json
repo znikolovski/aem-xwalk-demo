@@ -1,0 +1,182 @@
+{
+  "templates": [
+    {
+      "name": "personal-homepage",
+      "urls": [
+        "https://www.anz.com.au/personal/"
+      ],
+      "description": "ANZ Personal Banking homepage - consumer-facing entry point with hero carousel, product links, financial tools, app promotion, support resources, and regulatory disclaimers",
+      "sections": [
+        {
+          "id": "section-alert-banner",
+          "name": "Alert Banner",
+          "selector": ".butter-bar",
+          "style": "grey",
+          "blocks": [
+            "fragment"
+          ],
+          "defaultContent": [
+            ".butter-bar__content"
+          ]
+        },
+        {
+          "id": "section-header",
+          "name": "Global Header",
+          "selector": "header.header",
+          "style": null,
+          "blocks": [
+            "header"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-hero-carousel",
+          "name": "Hero Carousel",
+          "selector": ".hero--container",
+          "style": null,
+          "blocks": [
+            "carousel"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-banking-with-anz",
+          "name": "Banking with ANZ",
+          "selector": ".container--four-columns",
+          "style": null,
+          "blocks": [
+            "cards"
+          ],
+          "defaultContent": [
+            "h2"
+          ]
+        },
+        {
+          "id": "section-court-notice",
+          "name": "Federal Court Notice",
+          "selector": ".box--pale-blue",
+          "style": "pale-blue",
+          "blocks": [
+            "fragment"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-your-money-matters",
+          "name": "Your Money Matters",
+          "selector": [
+            ".container--four.box--white.container--three-columns",
+            ".container--three-columns"
+          ],
+          "style": null,
+          "blocks": [
+            "columns"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-cost-of-living",
+          "name": "Cost of Living",
+          "selector": ".container--matchheight.container--eightfour",
+          "style": null,
+          "blocks": [
+            "columns"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-calculators",
+          "name": "Calculators and Tools",
+          "selector": [
+            ".container--foureight .inpage-nav--calcs",
+            ".inpage-nav--calcs"
+          ],
+          "style": null,
+          "blocks": [
+            "cards"
+          ],
+          "defaultContent": [
+            "h2"
+          ]
+        },
+        {
+          "id": "section-anz-plus",
+          "name": "ANZ Plus App Promotion",
+          "selector": ".container--matchheight.container--four.container--three-columns",
+          "style": null,
+          "blocks": [
+            "columns"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-need-help",
+          "name": "Need Help / Support",
+          "selector": ".container--matchheight.container--eightfour",
+          "style": null,
+          "blocks": [
+            "columns"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-disclaimers",
+          "name": "Important Information",
+          "selector": ".accordion.accordion--open",
+          "style": null,
+          "blocks": [
+            "accordion"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-footer",
+          "name": "Global Footer",
+          "selector": "footer.footer",
+          "style": null,
+          "blocks": [
+            "footer"
+          ],
+          "defaultContent": []
+        }
+      ],
+      "blocks": [
+        {
+          "name": "carousel",
+          "instances": [
+            ".hero--container",
+            ".herocontainer"
+          ]
+        },
+        {
+          "name": "cards",
+          "instances": [
+            ".container--four-columns .inpage-nav__links",
+            ".inpage-nav--calcs"
+          ]
+        },
+        {
+          "name": "columns",
+          "instances": [
+            ".container--four.box--white.container--three-columns",
+            ".container--matchheight.container--eightfour",
+            ".container--matchheight.container--four.container--three-columns"
+          ]
+        },
+        {
+          "name": "accordion",
+          "instances": [
+            ".accordion.accordion--open"
+          ]
+        },
+        {
+          "name": "fragment",
+          "instances": [
+            ".butter-bar",
+            ".box--pale-blue"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+<svg width="80" height="32" viewBox="0 0 80 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <text x="0" y="26" font-family="Arial, sans-serif" font-weight="700" font-size="28" fill="#fff">ANZ</text>
+  <circle cx="68" cy="8" r="3" fill="#009FDA" opacity="0.9"/>
+  <circle cx="72" cy="5" r="2" fill="#009FDA" opacity="0.6"/>
+  <circle cx="74" cy="10" r="1.5" fill="#009FDA" opacity="0.4"/>
+</svg>

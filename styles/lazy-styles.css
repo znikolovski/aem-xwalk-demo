@@ -1,1 +1,327 @@
-/* add global styles that can be loaded post LCP here */
+/* ANZ lazy-loaded styles (post-LCP) */
+
+/* ========================================
+   LINK CHEVRONS - right-hand arrow on links
+   ======================================== */
+
+/* Chevron on links within columns blocks (Your Money Matters, Cost of Living, Need Help, etc.) */
+.columns .button-container a.button::after,
+.columns p > a:any-link:not(.button)::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-top: 1.5px solid currentcolor;
+  border-right: 1.5px solid currentcolor;
+  transform: rotate(45deg);
+  margin-left: 6px;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+/* No chevron on badge pills, CTA buttons, or inline text links */
+/* stylelint-disable-next-line no-descending-specificity */
+.columns p > strong:only-child a::after,
+.columns p > a:any-link:not(.button)[href*="#"]::after {
+  display: none;
+}
+
+/* Chevron on "See all calculators" link */
+main .section.cards-container > div > .button-container a.button::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-top: 1.5px solid currentcolor;
+  border-right: 1.5px solid currentcolor;
+  transform: rotate(45deg);
+  margin-left: 6px;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+/* Notice section: icon + text side by side */
+main .section.pale-blue .default-content-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+main .section.pale-blue .default-content-wrapper p:first-child {
+  flex-shrink: 0;
+  width: 48px;
+  line-height: 0;
+}
+
+main .section.pale-blue .default-content-wrapper p:first-child img {
+  width: 48px;
+  height: 50px;
+}
+
+/* Chevron on Banking with ANZ section links */
+/* stylelint-disable-next-line no-descending-specificity */
+main > .section:not([class*="-container"]) .button-container a.button::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-top: 1.5px solid currentcolor;
+  border-right: 1.5px solid currentcolor;
+  transform: rotate(45deg);
+  margin-left: 6px;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+/* Chevron on notice "Find out more" link */
+/* stylelint-disable-next-line no-descending-specificity */
+main .section.pale-blue a::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-top: 1.5px solid currentcolor;
+  border-right: 1.5px solid currentcolor;
+  transform: rotate(45deg);
+  margin-left: 6px;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+/* No chevron on hero CTA button */
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel .carousel-slide-content a.button::after {
+  display: none;
+}
+
+/* No chevron on accordion links */
+/* stylelint-disable-next-line no-descending-specificity */
+.accordion a::after {
+  display: none;
+}
+
+/* ========================================
+   BANKING WITH ANZ - 4-column grid layout
+   ======================================== */
+
+/* Target the default content section with "Banking with ANZ" heading */
+main > .section:not([class*="-container"]) .default-content-wrapper:has(> h2:first-child) {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px 31px;
+}
+
+main > .section:not([class*="-container"]) .default-content-wrapper > h2:first-child {
+  grid-column: 1 / -1;
+}
+
+@media (width >= 900px) {
+  main > .section:not([class*="-container"]) .default-content-wrapper:has(> h2:first-child) {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-flow: dense;
+    gap: 6px 31px;
+  }
+
+  main > .section:not([class*="-container"]) .default-content-wrapper > h2:first-child {
+    grid-column: 1;
+    grid-row: 1 / 5;
+    align-self: start;
+  }
+
+  /* Links distributed across 3 columns: items 1-4 in col 2, 5-8 in col 3, 9-12 in col 4 */
+  main > .section:not([class*="-container"]) .default-content-wrapper > .button-container {
+    margin: 0;
+  }
+
+  /* Column 2: items 1-4 */
+  main > .section:not([class*="-container"]) .default-content-wrapper > .button-container:nth-of-type(-n+4) {
+    grid-column: 2;
+  }
+
+  /* Column 3: items 5-8 */
+  main > .section:not([class*="-container"]) .default-content-wrapper > .button-container:nth-of-type(n+5):nth-of-type(-n+8) {
+    grid-column: 3;
+  }
+
+  /* Column 4: items 9-12 */
+  /* stylelint-disable-next-line no-descending-specificity */
+  main > .section:not([class*="-container"]) .default-content-wrapper > .button-container:nth-of-type(n+9) {
+    grid-column: 4;
+  }
+}
+
+/* ========================================
+   BUTTON OVERRIDES - render as plain links
+   ======================================== */
+
+/* Override button styling for links in default content sections (like "Banking with ANZ") */
+/* stylelint-disable-next-line no-descending-specificity */
+main > .section:not([class*="-container"]) a.button:any-link {
+  display: inline;
+  background-color: transparent;
+  color: var(--link-color);
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  font-weight: 400;
+  font-size: var(--body-font-size-m);
+  line-height: 22px;
+  text-align: left;
+  white-space: normal;
+  max-width: none;
+  overflow: visible;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main > .section:not([class*="-container"]) a.button:hover {
+  background-color: transparent;
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+/* Override button styling for links inside columns blocks - render as plain links */
+/* stylelint-disable-next-line no-descending-specificity */
+.columns a.button:any-link {
+  display: inline;
+  background-color: transparent;
+  color: var(--link-color);
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 4px 0;
+  font-weight: 400;
+  font-size: var(--body-font-size-m);
+  line-height: 22px;
+  text-align: left;
+  white-space: normal;
+  max-width: none;
+  overflow: visible;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.columns a.button:hover {
+  background-color: transparent;
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+/* Override for cards block links */
+/* stylelint-disable-next-line no-descending-specificity */
+.cards a.button:any-link {
+  display: inline;
+  background-color: transparent;
+  color: var(--link-color);
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  font-weight: 400;
+  font-size: var(--body-font-size-m);
+  max-width: none;
+  white-space: normal;
+  overflow: visible;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.cards a.button:hover {
+  background-color: transparent;
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+/* Cards section - "See all" link below grid should be plain text */
+/* stylelint-disable-next-line no-descending-specificity */
+main .section.cards-container > div > .button-container a.button:any-link {
+  display: inline;
+  background-color: transparent;
+  color: var(--link-color);
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-weight: 400;
+  font-size: var(--body-font-size-m);
+  max-width: none;
+  white-space: normal;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main .section.cards-container > div > .button-container a.button:hover {
+  background-color: transparent;
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+/* Fragment section (pale-blue) link overrides */
+/* stylelint-disable-next-line no-descending-specificity */
+main .section.pale-blue a.button:any-link {
+  display: inline;
+  background-color: transparent;
+  color: var(--link-color);
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-weight: 400;
+  font-size: var(--body-font-size-m);
+  max-width: none;
+  white-space: normal;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main .section.pale-blue a.button:hover {
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+/* ========================================
+   FEATURE SECTIONS - badge above heading
+   ======================================== */
+
+/* In columns cells with badge + heading, use flexbox to reorder badge above heading */
+.columns > div > div:has(p > strong:only-child) {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Badge paragraph: move to top */
+/* stylelint-disable-next-line no-descending-specificity */
+.columns > div > div:has(p > strong:only-child) > p:has(> strong:only-child) {
+  order: -2;
+  margin-top: 0;
+}
+
+/* Heading: just below badge */
+/* stylelint-disable-next-line no-descending-specificity */
+.columns > div > div:has(p > strong:only-child) > h2,
+.columns > div > div:has(p > strong:only-child) > h3 {
+  order: -1;
+}
+
+/* Columns with secondary CTA: last button-container link in a cell that also has a strong badge */
+/* stylelint-disable-next-line no-descending-specificity */
+.columns > div > div:has(p > strong:only-child) .button-container:last-child a.button:any-link {
+  display: inline-block;
+  background-color: transparent;
+  color: var(--link-color);
+  border: 1px solid var(--link-color);
+  border-radius: 3px;
+  padding: 10px 16px;
+  margin: 12px 0;
+  font-weight: 400;
+  font-size: 15px;
+  text-align: center;
+  white-space: nowrap;
+  max-width: 250px;
+}
+
+/* No chevron on CTA buttons */
+.columns > div > div:has(p > strong:only-child) .button-container:last-child a.button::after {
+  display: none;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.columns > div > div:has(p > strong:only-child) .button-container:last-child a.button:hover {
+  background-color: var(--link-hover-color);
+  color: #fff;
+  text-decoration: none;
+}

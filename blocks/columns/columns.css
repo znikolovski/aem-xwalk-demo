@@ -19,11 +19,34 @@
   display: block;
 }
 
+/* ANZ badge/pill styling */
+.columns p > strong:only-child {
+  display: inline-block;
+  background-color: var(--color-brand-dark);
+  color: #fff;
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  line-height: 22px;
+  padding: 2px 12px 4px;
+  border-radius: 20px;
+}
+
+/* ANZ link styling within columns */
+.columns p a:any-link:not(.button) {
+  color: var(--link-color);
+  font-size: var(--body-font-size-m);
+  text-decoration: none;
+}
+
+.columns p a:any-link:not(.button):hover {
+  text-decoration: underline;
+}
+
 @media (width >= 900px) {
   .columns > div {
-    align-items: center;
+    align-items: flex-start;
     flex-direction: unset;
-    gap: 24px;
+    gap: 31px;
   }
 
   .columns > div > div {

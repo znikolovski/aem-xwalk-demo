@@ -176,14 +176,27 @@ async function buildBreadcrumbs() {
 export default async function decorate(block) {
   // load nav as fragment
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
-  const fragment = await loadFragment(navPath);
+  let navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+  let fragment = await loadFragment(navPath);
+  // fallback: try /content/nav if default path fails
+  if (!fragment && !navMeta) {
+    navPath = '/content/nav';
+    fragment = await loadFragment(navPath);
+  }
 
   // decorate nav DOM
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
+
+  // Unwrap section/default-content-wrapper if nav content is nested
+  const wrapper = nav.querySelector('.default-content-wrapper');
+  if (wrapper && nav.children.length === 1) {
+    const section = nav.children[0];
+    while (wrapper.firstElementChild) nav.append(wrapper.firstElementChild);
+    section.remove();
+  }
 
   const classes = ['brand', 'sections', 'tools'];
   classes.forEach((c, i) => {
@@ -218,10 +231,25 @@ export default async function decorate(block) {
 
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
-    const search = navTools.querySelector('a[href*="search"]');
-    if (search && search.textContent === '') {
-      search.setAttribute('aria-label', 'Search');
-    }
+    // Strip button classes from nav tool links
+    navTools.querySelectorAll('.button-container').forEach((buttonContainer) => {
+      buttonContainer.classList.remove('button-container');
+      const btn = buttonContainer.querySelector('.button');
+      if (btn) btn.classList.remove('button');
+    });
+
+    // Add search icon and login button
+    const searchIcon = document.createElement('span');
+    searchIcon.className = 'nav-search-icon';
+    searchIcon.setAttribute('aria-label', 'Search');
+    searchIcon.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16" y1="16" x2="22" y2="22"/></svg>';
+
+    const loginBtn = document.createElement('a');
+    loginBtn.className = 'nav-login';
+    loginBtn.href = 'https://login.anz.com/internetbanking';
+    loginBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Log in';
+
+    navTools.prepend(searchIcon, loginBtn);
   }
 
   // hamburger for mobile

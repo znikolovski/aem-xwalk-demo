@@ -1,0 +1,21 @@
+{
+  "status": "success",
+  "url": "https://www.anz.com.au/personal/",
+  "path": "personal",
+  "timestamp": "2026-03-16T01:50:23.092Z",
+  "title": "ANZ Personal – Bank accounts, home loans, credit cards & more | ANZ",
+  "template": "personal-homepage",
+  "blocks": [
+    "carousel",
+    "carousel",
+    "cards",
+    "columns",
+    "columns",
+    "columns",
+    "columns",
+    "columns",
+    "accordion",
+    "fragment",
+    "fragment"
+  ]
+}
