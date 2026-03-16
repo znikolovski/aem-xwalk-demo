@@ -133,15 +133,6 @@ async function loadEager(doc) {
     doc.body.dataset.breadcrumbs = true;
   }
 
-  // Alert banner above the header
-  const header = doc.querySelector('header');
-  if (header) {
-    const alert = document.createElement('div');
-    alert.className = 'alert-banner';
-    alert.innerHTML = 'Be alert to fake direct debit confirmation emails that are impersonating banks. <a href="https://www.anz.com.au/security/latest-scams-australia/#direct-debit">Learn more</a>.';
-    header.parentNode.insertBefore(alert, header);
-  }
-
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);

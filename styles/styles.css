@@ -67,23 +67,11 @@ body.appear {
   display: block;
 }
 
-/* Alert banner above header */
-.alert-banner {
-  background-color: var(--color-bg-alert);
-  text-align: center;
-  padding: 8px 24px;
-  font-size: var(--body-font-size-s);
-  line-height: 18px;
-  color: var(--text-color);
-}
 
-.alert-banner a {
-  color: var(--link-color);
-  text-decoration: underline;
-}
 
 header {
-  height: var(--header-height);
+  height: 0;
+  overflow: visible;
 }
 
 header .header,
@@ -96,11 +84,7 @@ footer .footer[data-block-status="loaded"] {
   visibility: visible;
 }
 
-@media (width >= 900px) {
-  body[data-breadcrumbs] {
-    --header-height: calc(var(--nav-height) + var(--breadcrumbs-height));
-  }
-}
+/* breadcrumbs height no longer needed — nav overlays hero */
 
 h1,
 h2,
