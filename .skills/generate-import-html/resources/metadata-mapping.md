@@ -417,3 +417,120 @@ Skip these - platform generates from canonical/title/description:
 - 3-7 tags per page
 - Relevant to content
 - Consistent with site taxonomy
+
+---
+
+## CBA (commbank.com.au) Metadata Mapping
+
+When generating the metadata block for CommBank pages, apply these CBA-specific rules.
+
+### Title
+
+CommBank page titles follow the pattern: `[Page Name] | CommBank`
+
+```
+Source: <title>Home loans - find the right one | CommBank</title>
+```
+
+**Rule:** Strip ` | CommBank` from the title in the page-level metadata block. Instead, configure the site-wide `title:suffix: | CommBank` in the bulk metadata sheet so it is applied automatically across all pages.
+
+```
+# In page metadata block:
+title: Home loans - find the right one
+
+# In bulk metadata sheet (site-wide):
+title:suffix: | CommBank
+```
+
+### Description
+
+CommBank meta descriptions are always well-crafted — include verbatim. They are present on all pages.
+
+```
+Source: <meta name="description" content="Compare CommBank home loans with competitive interest rates. Variable, fixed, low deposit, investment and more. Apply online or book an appointment today.">
+Metadata: description: Compare CommBank home loans with competitive interest rates. Variable, fixed, low deposit, investment and more. Apply online or book an appointment today.
+```
+
+### Image (og:image)
+
+CommBank og:images are Scene7 URLs. Download the image locally during the scrape phase and use the local path.
+
+```
+Source: <meta property="og:image" content="https://assets.commbank.com.au/is/image/commbank/home-loans-og$W1200_H630$">
+Action: Download asset → save as ./images/[hash].jpg
+Metadata: image: ./images/[hash].jpg
+```
+
+### CBA-Specific Metadata Properties
+
+Include these additional properties when present:
+
+| Property | How to find it | Example value | Notes |
+|----------|---------------|---------------|-------|
+| `section` | URL path segment | `home-loans` | Infer from URL: `/home-buying/home-loans.html` → `home-loans` |
+| `tribe` | `window.adobeDataLayer[0].page.info.tribe` or `sara.page.tribe` in page source | `retail` or `business` | Maps to path-based routing in EDS |
+| `robots` | `<meta name="robots">` | `index, follow` | Include only if non-default (e.g., `noindex`) |
+| `article:published_time` | `<meta property="article:published_time">` | `2026-03-17T00:00:00+10:00` | Newsroom articles only — keep as-is in ISO 8601 |
+| `article:modified_time` | `<meta property="article:modified_time">` | `2026-03-17T09:15:00+10:00` | Newsroom articles only |
+| `tags` | `<meta property="article:tag">` OR inferred from `?tagName=newsroom:category/[name]` URL | `Economic news` | Strip `newsroom:category/` prefix from tag values |
+
+### CBA Canonical URL
+
+CommBank pages use `.html` extensions. Configure the extension in bulk metadata:
+
+```
+# In bulk metadata sheet (site-wide):
+canonical:extension: .html
+```
+
+Only include explicit `canonical` in a page metadata block if the page is syndicated content pointing to a different origin. For standard CBA pages, omit canonical and let EDS auto-generate.
+
+### AEM-Specific Properties to Skip
+
+These properties appear in CBA source pages but should NOT be included in EDS metadata blocks:
+
+| Source property | Why to skip |
+|----------------|-------------|
+| `cq:lastModified` | AEM CMS property — not used in EDS |
+| `jcr:title` | AEM JCR node title — use `<title>` tag instead |
+| `cq:tags` | AEM tag format (e.g., `commbank:section/home-loans`) — map to `section` property instead |
+| `wcmmode` | AEM rendering mode — not applicable to EDS |
+| `ContextHub.*` | AEM personalisation — not used in EDS |
+| `adobe.target.mbox.*` | AEM Test & Target — handled by EDS experimentation plugin |
+
+### CBA Metadata Block Example
+
+For the Home Loans page (`/home-buying/home-loans.html`):
+
+```
+| Metadata |
+|---------|
+| title | Home loans - find the right one |
+| description | Compare CommBank home loans with competitive interest rates. Variable, fixed, low deposit, investment and more. Apply online or book an appointment today. |
+| image | ./images/a1b2c3d4.jpg |
+| section | home-loans |
+| tribe | retail |
+```
+
+For a Newsroom article:
+
+```
+| Metadata |
+|---------|
+| title | RBA holds cash rate at 4.10% |
+| description | The Reserve Bank of Australia has held the cash rate at 4.10% at its March 2026 meeting. Here's what it means for your home loan and savings. |
+| image | ./images/f5e6d7c8.jpg |
+| section | newsroom |
+| tags | Economic news |
+| article:published_time | 2026-03-17T00:00:00+10:00 |
+```
+
+### CBA title:suffix Bulk Metadata Configuration
+
+Set once in the site-wide bulk metadata spreadsheet — **not in individual page metadata blocks**:
+
+```
+| URL | title:suffix | canonical:extension |
+|-----|-------------|-------------------|
+| /** | \| CommBank   | .html              |
+```
