@@ -97,7 +97,46 @@ If ANY sections meet these criteria → Execute Step 3e for EACH qualifying sect
 
 **With block inventory context, ask:** "Which available block would an author choose for this?"
 
-**DECISION TREE: When to Invoke content-modeling**
+**For CBA pages:** Use the CBA-specific decision table below for instant matching. These patterns are definitive for commbank.com.au.
+
+#### CBA Block Decision Table (for commbank.com.au pages)
+
+| What you see on the CBA page | Block to use |
+|-----------------------------|-------------|
+| Dismissible top alert bar (rate change, promo, emergency) | `announcement-banner` |
+| H1 + subheading + 1–2 CTAs — solid/gradient background | `hero` |
+| H1 + text + CTAs left, image right | `hero (image-right)` |
+| Full-width background image with overlaid heading | `hero (full-bleed)` |
+| Category tag + H1 + date (newsroom article top) | `hero (editorial)` |
+| Horizontal row of icon pictograms + short labels, link to page sections | `anchor-tile-nav` |
+| Grid of products with icons, feature bullets, "Tell me more" CTA | `product-card` |
+| Grid of products with icon + purchase rate / monthly fee / interest free days `<dl>` data | `product-card (extended)` |
+| "X.XX% p.a. interest rate / X.XX% p.a. comparison rate[*]" display | `rate-display` |
+| Interactive calculator with loan amount input + P&I/IO toggles + dynamic rate results | `rate-calculator` |
+| "Already a customer? / New customer?" two-path apply modal | `modal-apply` |
+| 4-column grid of award badges / icons + heading + description (CANSTAR, fast approval, etc.) | `feature-grid` |
+| Numbered steps with icons (How to apply, How it works) | `step-process` |
+| Sticky row of anchor links at top of product detail section | `in-page-nav` |
+| Tabbed content navigation (Benefits / How it works / Rates / Support) | `tabs` |
+| Expandable Q&A — "Understanding [product] (FAQs)" | `accordion` |
+| 2–3 column table of fees and rates (Monthly fee / Purchase rate / Cash advance rate) | `rates-fees-table` |
+| Large 780×416 editorial card + heading + description + CTA | `featured-content` |
+| Time-limited inline offer with deadline (Qantas Points bonus, cashback) | `promo-offer-banner` |
+| Partner logo + image + description (Home-in, NBN, Hollard, AIA) | `partner-block` |
+| 3-column icon + heading + link list (Support & FAQs / Contact us / Locate us) | `support-cards` |
+| 3-column grid of image + article heading + excerpt + "Read more" link | `article-cards` |
+| App Store badge + Google Play badge + device mockup image | `app-download` |
+| Article card grid + category filter buttons + load-more button | `newsroom-listing` |
+| 4 tier cards (Yello / Yello Plus / Yello Gold / Yello Diamond) + retailer logos | `loyalty-tiers` |
+| Dropdown "What's your enquiry?" + dynamic contact details reveal | `contact-form` |
+| Collapsed legal section at page bottom — "Things you should know" with superscript refs | `footnotes` |
+
+**⚠️ CBA-specific rules:**
+- The `footnotes` block is a **legal requirement** — if superscript markers (`[1]`, `[*]`, `[+]`) appear anywhere on the page, there MUST be a footnotes block at the bottom
+- `rate-display` values should NOT be hardcoded — note that rates will come from a data source
+- AEM Target mbox wrappers (`<div class="mboxDefault">`) are NOT blocks — strip them and import their content
+
+**DECISION TREE: When to Invoke content-modeling (for any project)**
 
 **OBVIOUS MATCH (Don't invoke content-modeling):**
 
@@ -107,11 +146,12 @@ Pattern matches block purpose 1:1:
 - "Tabbed content panels" + see "tabs" block → USE IT ✅
 - "Side-by-side content" + see "columns" block → USE IT ✅
 - "Rotating images" + see "carousel" block → USE IT ✅
+- Any row in CBA Block Decision Table above → USE THAT BLOCK ✅
 
 **Criteria for OBVIOUS:**
 - Content description matches block purpose exactly
 - No ambiguity about structure
-- Block exists in inventory
+- Block exists in inventory (or in CBA decision table)
 
 **UNCLEAR MATCH (Invoke content-modeling):**
 
@@ -219,6 +259,74 @@ Section 4 (dark):
     → Decision: Tabs block
     → Reason: Interactive component, needs decoration
     → Obvious match with "tabs" block in inventory
+```
+
+**CBA-specific example — Home Loans page (/home-buying/home-loans.html):**
+
+```
+Section 0 (yellow banner, top of page):
+  - Sequence 1: "Dismissible alert: home loan rates changed, View current rates link"
+    → Decision: announcement-banner block
+    → Reason: CBA pattern — dismissible top-of-page alert
+    → CBA Block Decision Table match
+
+Section 1 (dark blue gradient):
+  - Sequence 1: "H1 heading + subheading paragraph + Book appointment + Get started CTAs"
+    → Decision: hero block
+    → Reason: Standard CBA hero — H1 + text + dual CTAs on gradient background
+    → Note: Strip <div class="mboxDefault" id="CB-HL-HERO"> mbox wrapper
+    → Note: Strip ?ei= parameters from CTA hrefs
+
+Section 2 (white):
+  - Sequence 1: "8 icon tiles: Home loan rates, Fixed rate, Variable rate, Refinancing..."
+    → Decision: anchor-tile-nav block
+    → Reason: CBA anchor tile navigation pattern — horizontal icon + label grid
+    → CBA Block Decision Table match
+
+Section 3 (white):
+  - Sequence 1: "Heading: Why choose CommBank for your home loan?"
+    → Decision: DEFAULT CONTENT
+    → Reason: Just a heading — author types it
+
+  - Sequence 2: "4 items: CANSTAR award badge + heading + description each"
+    → Decision: feature-grid block
+    → Reason: CBA trust signals / award badges 4-column pattern
+    → CBA Block Decision Table match
+
+Section 4 (light grey, id="variable"):
+  - Sequence 1: "Heading: Variable rate home loans"
+    → Decision: DEFAULT CONTENT
+
+  - Sequence 2: "3 product cards with icons, feature bullets, Tell me more CTAs"
+    → Decision: product-card block
+    → Reason: CBA standard product card grid
+    → CBA Block Decision Table match
+
+Section 5 (white):
+  - Sequence 1: "Interest rate 5.89% p.a. / Comparison rate 6.02% p.a.[*]"
+    → Decision: rate-display block
+    → Reason: CBA rate display pattern — never hardcoded, always this block
+    → Note: Rate values will be data-driven in EDS — do not hardcode
+
+Section 6 (yellow/gold banner):
+  - Sequence 1: "Promo: Home loan today. Holiday tomorrow. Up to 300K Qantas Points. Ends 30 June."
+    → Decision: promo-offer-banner block
+    → Reason: CBA time-limited promotional offer pattern
+
+Section 7 (white):
+  - Sequence 1: "Heading: Understanding home loans (FAQs)"
+    → Decision: DEFAULT CONTENT
+
+  - Sequence 2: "Expandable Q&A pairs — What is a comparison rate? How much can I borrow? etc."
+    → Decision: accordion block
+    → Reason: CBA FAQ accordion pattern
+    → Obvious match
+
+Section 8 (white, collapsed legal section):
+  - Sequence 1: "Things you should know — [*] comparison rate warning, [1] T&Cs, [+] Qantas offer terms"
+    → Decision: footnotes block
+    → Reason: ⚠️ MANDATORY legal requirement on all CBA product pages
+    → CBA Block Decision Table match
 ```
 
 ---

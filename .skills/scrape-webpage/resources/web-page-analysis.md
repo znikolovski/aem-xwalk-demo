@@ -325,6 +325,119 @@ Before proceeding with migration:
 - ✅ Link `href` attributes are preserved
 - ✅ Metadata includes at least title and description
 
+---
+
+## CBA (commbank.com.au) Specific Notes
+
+When scraping pages from **commbank.com.au**, apply these additional rules during the HTML extraction and cleanup phase.
+
+### 1. Scene7 Lazy-Loading Images
+
+CommBank uses Scene7/Dynamic Media for all images. The lazy-loading pattern uses a base64 GIF placeholder that is replaced by the `s7responsiveImage()` JavaScript function at runtime:
+
+```html
+<!-- Before JS runs (what you see in raw HTML): -->
+<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+     data-src="https://assets.commbank.com.au/is/image/commbank/hero$W780_H416$&fit=crop">
+
+<!-- After JS runs / after scroll trigger: -->
+<img src="https://assets.commbank.com.au/is/image/commbank/hero$W780_H416$&fit=crop">
+```
+
+**Action required:** The scroll-to-trigger-lazy-load step is critical for CBA pages. Wait for the `s7responsiveImage()` function to replace all placeholder images before extracting HTML. Check that no `data:image/gif;base64` placeholder remains in the final `src` attributes.
+
+### 2. Scene7 Image URL Normalisation
+
+After downloading Scene7 images, strip the crop/resize parameters from the `src` in the extracted HTML. EDS handles responsive cropping natively.
+
+```
+BEFORE: https://assets.commbank.com.au/is/image/commbank/hero-home-loans$W780_H416$&fit=crop
+AFTER:  ./images/[md5hash].jpg  (downloaded, local path, no crop params)
+```
+
+Standard CBA Scene7 crop presets to recognise and strip:
+- `$W375_H200$&fit=crop` — card thumbnail
+- `$W780_H416$&fit=crop` — hero card / featured content
+- `$W728_H432$&fit=crop` — page hero
+- `$W64_H64$` — SVG pictogram (icon tiles)
+
+### 3. Strip AEM Target Mbox Wrappers
+
+Hero sections and key CTAs on CBA pages are wrapped in AEM Test & Target mbox divs:
+
+```html
+<div class="mboxDefault" id="CB-HL-HERO">
+  <!-- This is the actual content to keep -->
+  <div class="hero-content">
+    <h1>Find a home loan that's right for you</h1>
+    ...
+  </div>
+</div>
+```
+
+**Action required:** During HTML extraction, unwrap `<div class="mboxDefault">` elements. Keep all child content, remove only the wrapper div. Also strip `<div class="mbox-placeholder">` and `<div class="mboxImported">` elements if present.
+
+### 4. Strip `?ei=` Tracking Parameters from Links
+
+Every CTA and navigation link on CBA pages carries an `?ei=` event instrumentation parameter:
+
+```html
+<!-- BEFORE (from page): -->
+<a href="/home-buying/home-loans.html?ei=cta-hlhero-getstarted">Get started</a>
+
+<!-- AFTER (in extracted HTML): -->
+<a href="/home-buying/home-loans.html">Get started</a>
+```
+
+**Action required:** Strip `?ei=[value]` from all `href` attributes in the extracted HTML. Use a regex replace: remove `\?ei=[^&"#\s]+` and merge remaining query params correctly if the URL had other params too (uncommon on CBA but possible).
+
+### 5. Strip ContextHub and Analytics Elements
+
+CBA's AEM pages include ContextHub and Analytics configuration markup that should be excluded from the extracted HTML:
+
+Elements to strip (in addition to standard script/style removal):
+- `<div class="cq-analytics-*">` — ContextHub containers
+- `<div id="contextHub">` — ContextHub root
+- `<div class="segment-*">` — AEM segmentation divs
+- `<img class="DCSIMG">` — WebTrends analytics pixel
+- `<noscript>` with GTM/analytics content
+
+### 6. SVG Pictograms
+
+CBA uses 64×64px SVG pictograms for icon tiles, support cards, and feature grids. These are served from:
+```
+https://assets.commbank.com.au/is/image/commbank/[name]
+```
+as SVG files (not rasterised images).
+
+The standard image conversion (SVG → PNG) applies. However, where SVGs are purely decorative pictograms, verify the alt text is meaningful (e.g., `alt="Home loan icon"` not `alt=""`).
+
+### 7. Dynamic Rate Values in HTML
+
+Interest rates on product pages may appear in two states in the scraped HTML:
+
+**State A — Template placeholders (rates not loaded):**
+```html
+<span class="interest-rate">#_KEY_INTEREST_RATE_#</span>
+```
+
+**State B — JS-populated rates (scroll/interaction required to trigger):**
+```html
+<span class="interest-rate">5.89%</span>
+```
+
+**Action required:** If you see `#_KEY_*_#` template variables, note that the rate data did not load. Include the rate-display block in the import with placeholder values — content authors will need to populate rates from the data source. Do NOT skip the rate section — mark it with a comment in the HTML.
+
+### 8. CBA Output Quality Checks (Additional)
+
+In addition to the standard quality checks, verify for CBA pages:
+- ✅ No `data:image/gif;base64` placeholders remain in image src attributes
+- ✅ No `?ei=` parameters remain in link href attributes
+- ✅ No `<div class="mboxDefault">` wrapper divs in extracted HTML
+- ✅ Scene7 crop parameters stripped from downloaded image filenames
+- ✅ Rate values loaded (no `#_KEY_*_#` template variables)
+- ✅ SVG pictograms downloaded (even small 64×64 icon files)
+
 ## Script Architecture
 
 The `analyze-webpage.js` script is organized as:
