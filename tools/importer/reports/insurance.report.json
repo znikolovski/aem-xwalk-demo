@@ -1,0 +1,16 @@
+{
+  "status": "success",
+  "url": "https://www.commbank.com.au/insurance.html",
+  "path": "insurance",
+  "timestamp": "2026-03-19T05:37:26.572Z",
+  "title": "Insurance - CommBank",
+  "template": "marketing-hub",
+  "blocks": [
+    "announcement-banner",
+    "hero",
+    "promo-offer-banner",
+    "product-card",
+    "product-card",
+    "product-card"
+  ]
+}

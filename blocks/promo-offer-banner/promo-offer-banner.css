@@ -1,0 +1,70 @@
+.promo-offer-banner {
+  padding: 0;
+}
+
+.promo-offer-banner > div {
+  display: flex;
+  flex-direction: column;
+  background: var(--cba-white);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.promo-offer-banner-content {
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.promo-offer-banner-content h2 {
+  margin: 0;
+  font-size: var(--heading-font-size-l);
+  font-weight: 800;
+  line-height: 1.33;
+}
+
+.promo-offer-banner-content p {
+  margin: 0;
+  font-size: var(--body-font-size-m);
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+.promo-offer-banner-content .button-container {
+  margin: 0;
+}
+
+.promo-offer-banner-content a.button {
+  margin: 0;
+}
+
+.promo-offer-banner-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+@media (width >= 900px) {
+  .promo-offer-banner > div {
+    flex-direction: row-reverse;
+    align-items: stretch;
+  }
+
+  .promo-offer-banner-content {
+    flex: 1;
+    justify-content: center;
+    padding: 64px;
+    gap: 24px;
+  }
+
+  .promo-offer-banner-image {
+    flex: 1;
+  }
+
+  .promo-offer-banner-image img {
+    height: 100%;
+    object-fit: cover;
+  }
+}

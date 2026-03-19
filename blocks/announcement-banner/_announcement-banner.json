@@ -1,0 +1,44 @@
+{
+  "definitions": [
+    {
+      "title": "Announcement Banner",
+      "id": "announcement-banner",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Announcement Banner",
+              "model": "announcement-banner"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "announcement-banner",
+      "fields": [
+        {
+          "component": "richtext",
+          "name": "text",
+          "label": "Announcement Text",
+          "description": "The announcement message to display"
+        },
+        {
+          "component": "aem-content",
+          "name": "ctaLink",
+          "label": "CTA Link",
+          "description": "Link for the call-to-action button"
+        },
+        {
+          "component": "text",
+          "name": "ctaText",
+          "label": "CTA Text",
+          "description": "Text for the call-to-action button"
+        }
+      ]
+    }
+  ]
+}

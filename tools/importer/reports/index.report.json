@@ -1,0 +1,18 @@
+{
+  "status": "success",
+  "url": "https://www.commbank.com.au/",
+  "path": "index",
+  "timestamp": "2026-03-19T06:54:46.152Z",
+  "title": "CommBank - bank accounts, credit cards, home loans and insurance",
+  "template": "marketing-hub",
+  "blocks": [
+    "announcement-banner",
+    "hero",
+    "hero",
+    "anchor-tile-nav",
+    "promo-offer-banner",
+    "article-cards",
+    "product-card",
+    "support-cards"
+  ]
+}

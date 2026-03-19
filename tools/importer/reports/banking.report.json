@@ -1,0 +1,14 @@
+{
+  "status": "success",
+  "url": "https://www.commbank.com.au/banking.html",
+  "path": "banking",
+  "timestamp": "2026-03-19T05:37:15.484Z",
+  "title": "Banking - CommBank",
+  "template": "marketing-hub",
+  "blocks": [
+    "hero",
+    "promo-offer-banner",
+    "promo-offer-banner",
+    "product-card"
+  ]
+}

@@ -1,0 +1,431 @@
+{
+  "templates": [
+    {
+      "name": "marketing-hub",
+      "urls": [
+        "https://www.commbank.com.au/",
+        "https://www.commbank.com.au/banking.html",
+        "https://www.commbank.com.au/home-buying.html",
+        "https://www.commbank.com.au/insurance.html",
+        "https://www.commbank.com.au/investing-and-super.html",
+        "https://www.commbank.com.au/business.html",
+        "https://www.commbank.com.au/digital-banking.html",
+        "https://www.commbank.com.au/institutional.html"
+      ],
+      "description": "Marketing hub and category landing pages. Features announcement-banner, hero, anchor-tile-nav, product-card grids, promo-offer-banner, support-cards, and article-cards. Serves as entry point for each major product category.",
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Announcement Banner",
+          "selector": ".toast-module",
+          "style": null,
+          "blocks": [
+            "announcement-banner"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-2",
+          "name": "Hero",
+          "selector": ".container.hero-container .banner",
+          "style": null,
+          "blocks": [
+            "hero"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-3",
+          "name": "Products and Services Navigation",
+          "selector": ".homepage-six-pack",
+          "style": "light",
+          "blocks": [
+            "anchor-tile-nav"
+          ],
+          "defaultContent": [
+            ".homepage-six-pack h2"
+          ]
+        },
+        {
+          "id": "section-4",
+          "name": "Feature Promo",
+          "selector": ".fifty-split",
+          "style": null,
+          "blocks": [
+            "promo-offer-banner"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-5",
+          "name": "News/Content Cards",
+          "selector": ".column-control#column-control-0",
+          "style": null,
+          "blocks": [
+            "article-cards"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-6",
+          "name": "Financial Difficulty CTA",
+          "selector": ".cta",
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            ".cta-module"
+          ]
+        },
+        {
+          "id": "section-7",
+          "name": "More from CommBank",
+          "selector": ".cardsV2",
+          "style": null,
+          "blocks": [
+            "product-card"
+          ],
+          "defaultContent": [
+            ".card-module-alt h2"
+          ]
+        },
+        {
+          "id": "section-8",
+          "name": "Support and Help",
+          "selector": ".helpV2",
+          "style": "dark",
+          "blocks": [
+            "support-cards"
+          ],
+          "defaultContent": [
+            ".helpv2-heading h2"
+          ]
+        },
+        {
+          "id": "section-9",
+          "name": "Things You Should Know",
+          "selector": ".column-control#column-control-1",
+          "style": "dark",
+          "blocks": [],
+          "defaultContent": [
+            "#column-control-1 .one-by-three-columns"
+          ]
+        }
+      ],
+      "blocks": [
+        {
+          "name": "announcement-banner",
+          "instances": [
+            ".toast-module .toast-item.announcement"
+          ]
+        },
+        {
+          "name": "hero",
+          "instances": [
+            ".banner"
+          ]
+        },
+        {
+          "name": "anchor-tile-nav",
+          "instances": [
+            ".six-packs-module"
+          ]
+        },
+        {
+          "name": "promo-offer-banner",
+          "instances": [
+            ".fifty-split-module"
+          ]
+        },
+        {
+          "name": "article-cards",
+          "instances": [
+            ".column-control .four-column"
+          ]
+        },
+        {
+          "name": "product-card",
+          "instances": [
+            ".card-module-alt"
+          ]
+        },
+        {
+          "name": "support-cards",
+          "instances": [
+            ".helpv2-module"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "product-listing",
+      "urls": [
+        "https://www.commbank.com.au/home-loans.html",
+        "https://www.commbank.com.au/credit-cards.html",
+        "https://www.commbank.com.au/banking/savings-accounts.html",
+        "https://www.commbank.com.au/personal-loans.html",
+        "https://www.commbank.com.au/banking/transaction-accounts.html",
+        "https://www.commbank.com.au/banking/term-deposits.html",
+        "https://www.commbank.com.au/insurance/car-insurance.html",
+        "https://www.commbank.com.au/insurance/home-insurance.html",
+        "https://www.commbank.com.au/personal/accounts/comparison-table.html",
+        "https://www.commbank.com.au/personal/personal-loans/comparison-table.html"
+      ],
+      "description": "Product listing and comparison pages. Features hero, announcement-banner, anchor-tile-nav, rate-display, feature-grid, product-card, article-cards, promo-offer-banner, support-cards, and mandatory footnotes block. Used for comparing products within a category.",
+      "blocks": [
+        {
+          "name": "announcement-banner",
+          "instances": [
+            ".toast-module .toast-item.announcement"
+          ]
+        },
+        {
+          "name": "hero",
+          "instances": [
+            ".banner"
+          ]
+        },
+        {
+          "name": "anchor-tile-nav",
+          "instances": [
+            ".section-navigation-module"
+          ]
+        },
+        {
+          "name": "rate-display",
+          "instances": [
+            ".column-control:nth-child(4)"
+          ]
+        },
+        {
+          "name": "columns",
+          "instances": [
+            ".column-control:nth-child(5)"
+          ]
+        },
+        {
+          "name": "feature-grid",
+          "instances": [
+            ".column-control:nth-child(6)"
+          ]
+        },
+        {
+          "name": "product-card",
+          "instances": [
+            ".card-combo"
+          ]
+        },
+        {
+          "name": "article-cards",
+          "instances": [
+            ".cardsV2 .card-module-alt",
+            ".column:nth-of-type(1)"
+          ]
+        },
+        {
+          "name": "promo-offer-banner",
+          "instances": [
+            ".fifty-split-module"
+          ]
+        },
+        {
+          "name": "support-cards",
+          "instances": [
+            ".column:nth-of-type(2)",
+            ".lower-section-container .experiencefragment"
+          ]
+        },
+        {
+          "name": "footnotes",
+          "instances": [
+            ".lower-section-container .column"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "product-detail",
+      "urls": [
+        "https://www.commbank.com.au/home-loans/digi-home-loan.html",
+        "https://www.commbank.com.au/home-loans/standard-variable-rate.html",
+        "https://www.commbank.com.au/home-loans/fixed-rate.html",
+        "https://www.commbank.com.au/credit-cards/smart-awards.html",
+        "https://www.commbank.com.au/credit-cards/low-rate.html",
+        "https://www.commbank.com.au/credit-cards/neo.html",
+        "https://www.commbank.com.au/banking/savings-accounts/goalsaver.html",
+        "https://www.commbank.com.au/banking/savings-accounts/netsaver.html",
+        "https://www.commbank.com.au/insurance/car-insurance/comprehensive.html",
+        "https://www.commbank.com.au/insurance/home-insurance/home-building.html"
+      ],
+      "description": "Individual product detail pages. Features hero, tabs (in-page navigation), rate-display, feature-grid, accordion (FAQ, How to Apply, Rates), step-process, rates-fees-table, and mandatory footnotes block. Deep-dive into a single financial product.",
+      "blocks": [
+        {
+          "name": "announcement-banner",
+          "instances": [
+            ".toast-module .toast-item.announcement"
+          ]
+        },
+        {
+          "name": "hero",
+          "instances": [
+            ".banner"
+          ]
+        },
+        {
+          "name": "tabs",
+          "instances": [
+            "nav .section-navigation-module"
+          ]
+        },
+        {
+          "name": "rate-display",
+          "instances": [
+            "[class*='rate']"
+          ]
+        },
+        {
+          "name": "feature-grid",
+          "instances": [
+            "[class*='feature']"
+          ]
+        },
+        {
+          "name": "accordion",
+          "instances": [
+            ".accordion-module",
+            ".faq-module"
+          ]
+        },
+        {
+          "name": "step-process",
+          "instances": [
+            "[class*='step']"
+          ]
+        },
+        {
+          "name": "rates-fees-table",
+          "instances": [
+            "[class*='rate-table']"
+          ]
+        },
+        {
+          "name": "footnotes",
+          "instances": [
+            ".lower-section-container"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "loyalty-program",
+      "urls": [
+        "https://www.commbank.com.au/commbank-yello.html"
+      ],
+      "description": "CommBank Yello loyalty and rewards program pages. Features hero, tabs (section navigation), accordion sections, loyalty-tiers (4-tier comparison), app-download, and partner logos. Showcases membership benefits and reward tiers.",
+      "blocks": [
+        {
+          "name": "hero",
+          "instances": [
+            ".banner"
+          ]
+        },
+        {
+          "name": "tabs",
+          "instances": [
+            "nav .section-navigation-module"
+          ]
+        },
+        {
+          "name": "accordion",
+          "instances": [
+            ".accordion-module",
+            ".expandable-section"
+          ]
+        },
+        {
+          "name": "loyalty-tiers",
+          "instances": [
+            ".tier-cards",
+            ".eligibility-module"
+          ]
+        },
+        {
+          "name": "app-download",
+          "instances": [
+            ".app-download-module"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "support-contact",
+      "urls": [
+        "https://www.commbank.com.au/support.html",
+        "https://www.commbank.com.au/contact-us.html",
+        "https://www.commbank.com.au/digital-banking/support.html",
+        "https://www.commbank.com.au/support/banking/open-commonwealth-bank-account.html",
+        "https://www.commbank.com.au/support/digital-banking/register-for-netbank.html",
+        "https://www.commbank.com.au/support/credit-cards/set-up-autopay.html",
+        "https://www.commbank.com.au/support/home-loan/explain-rate-lock.html",
+        "https://www.commbank.com.au/support/insurance/calculate-my-premium.html",
+        "https://www.commbank.com.au/support/business/commbiz/how-to-apply.html"
+      ],
+      "description": "Support and contact pages including 571 help articles. Features search, support-cards, contact-form, and step-by-step help content.",
+      "blocks": [
+        {
+          "name": "search",
+          "instances": [
+            "article .search-module"
+          ]
+        },
+        {
+          "name": "support-cards",
+          "instances": [
+            ".help-module",
+            ".support-cards"
+          ]
+        },
+        {
+          "name": "contact-form",
+          "instances": [
+            ".contact-form-module"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "content-newsroom",
+      "urls": [
+        "https://www.commbank.com.au/articles/banking/what-is-a-debit-card.html",
+        "https://www.commbank.com.au/articles/business/foresight.html",
+        "https://www.commbank.com.au/articles/credit-cards/balance-transfer-guide.html",
+        "https://www.commbank.com.au/articles/savings/how-to-save-for-a-house-deposit.html",
+        "https://www.commbank.com.au/about-us/news/media-releases/2016/annual-results-2016.html",
+        "https://www.commbank.com.au/about-us/investors/annual-reports.html",
+        "https://www.commbank.com.au/about-us/careers.html",
+        "https://www.commbank.com.au/about-us/who-we-are.html"
+      ],
+      "description": "Content articles, newsroom, investor relations, careers, and corporate information pages. Features hero (editorial), article-cards (related content), newsroom-listing (category filtering), and long-form article body as default content.",
+      "blocks": [
+        {
+          "name": "hero",
+          "instances": [
+            ".banner"
+          ]
+        },
+        {
+          "name": "article-cards",
+          "instances": [
+            ".related-articles",
+            ".article-cards"
+          ]
+        },
+        {
+          "name": "newsroom-listing",
+          "instances": [
+            ".newsroom-listing-module"
+          ]
+        }
+      ]
+    }
+  ]
+}

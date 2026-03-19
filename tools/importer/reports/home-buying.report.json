@@ -1,0 +1,18 @@
+{
+  "status": "success",
+  "url": "https://www.commbank.com.au/home-buying.html",
+  "path": "home-buying",
+  "timestamp": "2026-03-19T05:37:22.017Z",
+  "title": "Home loans, interest rates, calculators & offers | CommBank",
+  "template": "marketing-hub",
+  "blocks": [
+    "announcement-banner",
+    "hero",
+    "promo-offer-banner",
+    "promo-offer-banner",
+    "article-cards",
+    "product-card",
+    "product-card",
+    "product-card"
+  ]
+}

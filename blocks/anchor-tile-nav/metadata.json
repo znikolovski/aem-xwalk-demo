@@ -1,0 +1,9 @@
+{
+  "name": "anchor-tile-nav",
+  "createdFrom": "custom-cba",
+  "createdForPage": "https://www.commbank.com.au/",
+  "createdDate": "2026-03-19",
+  "description": "6-column product category tile grid with icon, heading link with chevron, and sub-links",
+  "visualCharacteristics": "Responsive grid (2-col mobile, 3-col tablet, 6-col desktop), icon + heading with chevron + sub-link list per tile, vertical dividers on desktop",
+  "usedOnTemplates": ["marketing-hub"]
+}
