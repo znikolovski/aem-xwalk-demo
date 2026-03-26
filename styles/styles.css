@@ -51,7 +51,7 @@
   --header-height: var(--nav-height);
 
   /* layout */
-  --max-width-content: 1200px;
+  --max-width-content: 1138px;
 
   /* buttons */
   --button-border-radius: 24px;
@@ -332,6 +332,10 @@ main img {
 }
 
 /* sections */
+main {
+  overflow-x: clip;
+}
+
 main > .section {
   margin: 0;
   padding: var(--section-padding);
@@ -398,6 +402,7 @@ main > .section.hero-container + .section::before,
 /* stylelint-disable-next-line no-descending-specificity */
 main > .section:first-of-type::before {
   border-top: none;
+  margin: 0;
 }
 
 /* dark section link styling */
@@ -413,21 +418,49 @@ main .section.dark a.button.secondary {
   color: var(--cba-white);
 }
 
-/* hero section — no top/bottom padding, allow bleed */
+/* hero section — full-bleed, no padding, allow bleed */
 main > .section.hero-container {
-  padding-top: 0;
-  padding-bottom: 0;
-  position: relative;
-  z-index: 0;
+  padding: 0;
 }
 
-/* section after hero overlaps the hero bleed */
+/* section after hero — overlaps hero by 180px */
 main > .section.hero-container + .section {
   position: relative;
   z-index: 1;
+  padding: 0 32px 32px;
+}
+
+main > .section.promo-offer-banner-container {
+  position: relative;
+}
+
+/* financial difficulty CTA — compact centered banner */
+main > .section.article-cards-container + .section {
+  padding: 24px 32px 44px;
+}
+
+main > .section.article-cards-container + .section > .default-content-wrapper,
+main > .section.article-cards-container + .section > .default-content-wrapper:has(> h2 + .button-container:last-child) {
+  justify-content: center;
+  gap: 24px;
+}
+
+/* inset content sections — narrower with white background, aligned to hero content */
+/* stylelint-disable-next-line no-descending-specificity */
+main > .section:not(.hero-container, .dark) {
+  max-width: var(--max-width-content);
+  margin-left: auto;
+  margin-right: auto;
+  background: var(--cba-white);
+}
+
+main > .section:not(.hero-container, .dark) > div {
+  max-width: none;
+  padding: 0;
 }
 
 /* default content wrapper — centered text for CTA sections */
+/* stylelint-disable-next-line no-descending-specificity */
 main > .section > .default-content-wrapper {
   text-align: left;
 }
@@ -464,20 +497,25 @@ main > .section > .default-content-wrapper {
   }
 }
 
+/* hide footer diamond logo that was imported into footnotes section */
+main > .section.dark > .default-content-wrapper > p:has(> img[src*="cba-diamond"]) {
+  display: none;
+}
+
 /* "Things you should know" — 2-column dark section (h2 left, legal text right) */
 @media (width >= 900px) {
-  main > .section.dark > .default-content-wrapper:has(> h2:first-child + p:last-child) {
+  main > .section.dark > .default-content-wrapper:has(> h2:first-child) {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 32px;
     align-items: start;
   }
 
-  main > .section.dark > .default-content-wrapper:has(> h2:first-child + p:last-child) h2 {
+  main > .section.dark > .default-content-wrapper:has(> h2:first-child) h2 {
     margin: 0;
   }
 
-  main > .section.dark > .default-content-wrapper:has(> h2:first-child + p:last-child) p {
+  main > .section.dark > .default-content-wrapper:has(> h2:first-child) p {
     margin: 0;
     font-size: var(--body-font-size-s);
     line-height: 1.71;

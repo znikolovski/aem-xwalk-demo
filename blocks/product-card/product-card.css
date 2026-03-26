@@ -11,6 +11,8 @@
   flex-direction: column;
   background: var(--cba-white);
   overflow: hidden;
+  border: 1px solid var(--cba-divider);
+  border-radius: 4px;
 }
 
 .product-card-large .product-card-image img {
@@ -65,6 +67,8 @@
   background: var(--cba-white);
   overflow: hidden;
   gap: 1rem;
+  border: 1px solid var(--cba-divider);
+  border-radius: 4px;
 }
 
 .product-card-mini .product-card-image {
@@ -98,45 +102,67 @@
 @media (width >= 900px) {
   .product-card {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
+    align-content: start;
+    gap: 16px 24px;
   }
 
+  /* large cards: 1 column each, span all 3 rows */
   .product-card-large {
-    grid-column: span 3;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-row: 1 / -1;
   }
 
   .product-card-large .product-card-image img {
-    height: 100%;
-    aspect-ratio: auto;
+    aspect-ratio: 4 / 3;
   }
 
   .product-card-large .product-card-content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     padding: 24px;
   }
 
+  /* mini cards: all stack in column 3, horizontal layout */
   .product-card-mini {
-    grid-column: span 2;
-    flex-direction: column;
+    grid-column: 3;
+    gap: 12px;
   }
 
   .product-card-mini .product-card-image {
-    flex: none;
-    width: 100%;
+    flex: 0 0 100px;
   }
 
   .product-card-mini .product-card-image img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
+    width: 100px;
+    height: 68px;
   }
 
   .product-card-mini .product-card-content {
-    padding: 12px 16px;
+    padding: 8px 12px 8px 0;
+    min-width: 0;
+  }
+
+  .product-card-mini .product-card-content .button-container {
+    margin: 0;
+  }
+
+  .product-card-mini .product-card-content a.button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: var(--link-color);
+    font-size: var(--body-font-size-s);
+    font-weight: 700;
+    text-decoration: none;
+    white-space: normal;
+    text-align: left;
+  }
+
+  .product-card-mini .product-card-content a.button:hover {
+    text-decoration: underline;
+    background: none;
+    border: none;
   }
 }

@@ -1,25 +1,29 @@
-.anchor-tile-nav ul {
+.section.anchor-tile-nav-container > .default-content-wrapper {
+  display: none;
+}
+
+.anchor-tile-nav > ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  grid-template-columns: 1fr;
+  gap: 0;
 }
 
 .anchor-tile-nav-tile {
   padding: 24px;
   background: var(--cba-white);
-  border-radius: 0;
 }
 
+/* tile internal layout: icon left, heading + links right */
 .anchor-tile-nav-icon {
   margin-bottom: 12px;
 }
 
 .anchor-tile-nav-icon img {
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
 }
 
 .anchor-tile-nav-heading h3 {
@@ -57,14 +61,18 @@
   border-color: var(--cba-link-blue);
 }
 
+/* links — vertical stack */
 .anchor-tile-nav-links {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .anchor-tile-nav-links li {
-  margin-bottom: 4px;
+  margin: 0;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
@@ -74,27 +82,47 @@
 }
 
 @media (width >= 600px) {
-  .anchor-tile-nav ul {
-    grid-template-columns: repeat(3, 1fr);
+  .anchor-tile-nav > ul {
+    grid-template-columns: repeat(2, 1fr);
   }
+
 }
 
 @media (width >= 900px) {
-  .anchor-tile-nav ul {
+  .anchor-tile-nav > ul {
     grid-template-columns: repeat(3, 1fr);
-    gap: 0;
   }
 
+  /* icon + heading on same line via grid */
   .anchor-tile-nav-tile {
-    border-right: 1px solid var(--cba-divider);
-    padding: 24px 16px;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    grid-template-rows: auto auto;
+    gap: 8px 16px;
+    align-items: start;
+    padding: 24px 32px;
   }
 
-  .anchor-tile-nav-tile:nth-child(3n) {
-    border-right: none;
+  /* icon in top-left */
+  .anchor-tile-nav-icon {
+    grid-column: 1;
+    grid-row: 1;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .anchor-tile-nav-tile:nth-child(n+4) {
-    border-top: 1px solid var(--cba-divider);
+  /* heading aligned with icon */
+  .anchor-tile-nav-heading {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+  }
+
+  /* links below heading, aligned with heading (column 2) */
+  .anchor-tile-nav-links {
+    grid-column: 2;
+    grid-row: 2;
   }
 }

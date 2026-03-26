@@ -1,34 +1,40 @@
-.announcement-banner-wrapper {
+/* announcement banner — fixed dark bar at bottom of viewport, inset from edges */
+.hero-container .announcement-banner-wrapper {
   position: fixed;
   bottom: 0;
-  left: 0;
-  width: 100%;
+  left: 32px;
+  right: 32px;
+  width: auto;
   max-width: none;
-  z-index: 100;
-  background: var(--cba-dark);
+  min-height: 80px;
+  z-index: 10000;
+  background: #4f4c4d;
   color: var(--cba-white);
-  padding: 12px 24px;
   box-sizing: border-box;
+  flex-wrap: nowrap;
+  padding: 0;
 }
 
-.announcement-banner {
-  max-width: var(--max-width-content);
-  margin: 0 auto;
+/* row — centered flex layout */
+.announcement-banner > div {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  font-size: var(--body-font-size-s);
-  line-height: 1.5;
+  padding: 16px 64px;
+  color: var(--cba-white);
 }
 
 .announcement-banner p {
   margin: 0;
   color: var(--cba-white);
+  font-size: var(--body-font-size-s);
+  line-height: 1.5;
 }
 
 .announcement-banner a:any-link {
   color: var(--cba-white);
+  font-weight: 700;
 }
 
 .announcement-banner a.button {
@@ -40,23 +46,23 @@
   line-height: 32px;
   white-space: nowrap;
   margin: 0;
+  text-decoration: none;
 }
 
 .announcement-banner a.button:hover {
   background: var(--cba-white);
-  color: var(--cba-dark);
+  color: #4f4c4d;
 }
 
-.announcement-banner-content {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+@media (width < 600px) {
+  .hero-container .announcement-banner-wrapper {
+    left: 16px;
+    right: 16px;
+  }
 
-@media (width >= 900px) {
-  .announcement-banner-wrapper {
-    padding: 12px 32px;
+  .announcement-banner > div {
+    padding: 16px 24px;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 }
