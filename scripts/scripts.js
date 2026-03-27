@@ -75,12 +75,22 @@ function autolinkModals(doc) {
  * @param {Element} main The container element
  */
 function buildAutoBlocks() {
-  try {
-    // TODO: add auto block, if needed
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Auto Blocking failed', error);
-  }
+  // no auto blocks currently needed
+}
+
+/**
+ * Strip non-rendering icon font characters (U+F106 etc.) from link text.
+ * These come from the original ANZ site's icon font and render as boxes.
+ */
+function stripIconFontChars(main) {
+  main.querySelectorAll('a').forEach((a) => {
+    a.childNodes.forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        // eslint-disable-next-line no-param-reassign
+        node.textContent = node.textContent.replace(/[\uF100-\uF1FF]/g, '').trim();
+      }
+    });
+  });
 }
 
 function a11yLinks(main) {
@@ -107,7 +117,8 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
-  // add aria-label to links
+  // strip icon-font chars and add aria-label to links
+  stripIconFontChars(main);
   a11yLinks(main);
 }
 
@@ -121,6 +132,7 @@ async function loadEager(doc) {
   if (getMetadata('breadcrumbs').toLowerCase() === 'true') {
     doc.body.dataset.breadcrumbs = true;
   }
+
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
@@ -147,6 +159,16 @@ async function loadLazy(doc) {
 
   const main = doc.querySelector('main');
   await loadSections(main);
+
+  // Fix broken images: replace external ANZ CDN images with local icons
+  main.querySelectorAll('img').forEach((img) => {
+    img.addEventListener('error', () => {
+      const src = img.getAttribute('src') || '';
+      if (src.includes('icon-bank-blue')) {
+        img.src = `${window.hlx.codeBasePath}/icons/bank-blue.svg`;
+      }
+    }, { once: true });
+  });
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;

@@ -1,0 +1,9 @@
+{
+  "type": "xwalk",
+  "libraryUrl": "https://main--sta-xwalk-boilerplate--aemysites.aem.page/tools/sidekick/library.json",
+  "contentHostUrl": "author-p115476-e1135027.adobeaemcloud.com",
+  "aemSitePath": "/content/agentic",
+  "aemAssetsFolderPath": "/content/dam/agentic",
+  "aemSiteName": "agentic",
+  "aemSiteTitle": "Agentic Demo"
+}

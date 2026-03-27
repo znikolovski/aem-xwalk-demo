@@ -11,67 +11,47 @@
  */
 
 :root {
-  /* colors */
-  --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
-  --overlay-background-color:lightgrey;
+  /* ANZ Brand Colors */
+  --background-color: #fff;
+  --light-color: #f7f7f7;
+  --dark-color: #004165;
+  --text-color: #494949;
+  --link-color: #0072ac;
+  --link-hover-color: #004165;
+  --overlay-background-color: #efefef;
+  --color-brand-primary: #007dba;
+  --color-brand-dark: #004165;
+  --color-bg-notice: #f0faff;
+  --color-bg-calculator: #eef2f6;
+  --color-bg-alert: #efefef;
+  --color-border: #ccc;
+  --color-text-light: #737373;
+  --color-text-footer: #666;
 
   /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  --body-font-family: arial, sans-serif;
+  --heading-font-family: arial, sans-serif;
 
   /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 19px;
-  --body-font-size-xs: 17px;
+  --body-font-size-m: 15px;
+  --body-font-size-s: 13px;
+  --body-font-size-xs: 12px;
 
   /* heading sizes */
-  --heading-font-size-xxl: 55px;
-  --heading-font-size-xl: 44px;
-  --heading-font-size-l: 34px;
-  --heading-font-size-m: 27px;
-  --heading-font-size-s: 24px;
-  --heading-font-size-xs: 22px;
+  --heading-font-size-xxl: 36px;
+  --heading-font-size-xl: 27px;
+  --heading-font-size-l: 22px;
+  --heading-font-size-m: 18px;
+  --heading-font-size-s: 15px;
+  --heading-font-size-xs: 13px;
 
   /* nav heights */
-  --nav-height: 64px;
+  --nav-height: 60px;
   --breadcrumbs-height: 34px;
   --header-height: var(--nav-height);
 }
 
-/* fallback fonts */
-@font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
-  src: local('Arial');
-}
-
-@font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
-  src: local('Arial');
-}
-
-@media (width >= 900px) {
-  :root {
-    /* body sizes */
-    --body-font-size-m: 18px;
-    --body-font-size-s: 16px;
-    --body-font-size-xs: 14px;
-
-    /* heading sizes */
-    --heading-font-size-xxl: 45px;
-    --heading-font-size-xl: 36px;
-    --heading-font-size-l: 28px;
-    --heading-font-size-m: 22px;
-    --heading-font-size-s: 20px;
-    --heading-font-size-xs: 18px;
-  }
-}
+/* Arial is a system font, no @font-face needed */
 
 body {
   display: none;
@@ -80,15 +60,18 @@ body {
   color: var(--text-color);
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
-  line-height: 1.6;
+  line-height: 22px;
 }
 
 body.appear {
   display: block;
 }
 
+
+
 header {
-  height: var(--header-height);
+  height: 0;
+  overflow: visible;
 }
 
 header .header,
@@ -101,11 +84,7 @@ footer .footer[data-block-status="loaded"] {
   visibility: visible;
 }
 
-@media (width >= 900px) {
-  body[data-breadcrumbs] {
-    --header-height: calc(var(--nav-height) + var(--breadcrumbs-height));
-  }
-}
+/* breadcrumbs height no longer needed — nav overlays hero */
 
 h1,
 h2,
@@ -116,8 +95,9 @@ h6 {
   margin-top: 0.8em;
   margin-bottom: 0.25em;
   font-family: var(--heading-font-family);
-  font-weight: 600;
-  line-height: 1.25;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-brand-dark);
   scroll-margin: 40px;
 }
 
@@ -179,19 +159,20 @@ a.button:any-link,
 button {
   box-sizing: border-box;
   display: inline-block;
-  max-width: 100%;
+  max-width: 250px;
   margin: 12px 0;
-  border: 2px solid transparent;
-  border-radius: 2.4em;
-  padding: 0.5em 1.2em;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 10px 16px;
   font-family: var(--body-font-family);
   font-style: normal;
-  font-weight: 500;
-  line-height: 1.25;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
   text-align: center;
   text-decoration: none;
   background-color: var(--link-color);
-  color: var(--background-color);
+  color: #fff;
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -214,9 +195,11 @@ button:disabled:hover {
 
 a.button.secondary,
 button.secondary {
-  background-color: unset;
-  border: 2px solid currentcolor;
-  color: var(--text-color);
+  background-color: transparent;
+  border: 1px solid var(--link-color);
+  color: var(--link-color);
+  font-weight: 400;
+  font-size: 15px;
 }
 
 main img {
@@ -242,13 +225,23 @@ main > .section {
 }
 
 main > .section > div {
-  max-width: 1200px;
+  max-width: 1164px;
   margin: auto;
   padding: 0 24px;
 }
 
 main > .section:first-of-type {
   margin-top: 0;
+}
+
+/* Full-bleed carousel section */
+main > .section.carousel-container {
+  margin: 0;
+}
+
+main > .section.carousel-container > div {
+  max-width: none;
+  padding: 0;
 }
 
 @media (width >= 900px) {
@@ -263,4 +256,40 @@ main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: 40px 0;
+}
+
+main .section.pale-blue {
+  background-color: var(--color-bg-notice);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  margin: 20px auto;
+  padding: 24px 30px;
+  max-width: 1164px;
+}
+
+/* Pale-blue section: icon + text horizontal layout */
+main .section.pale-blue > div {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: none;
+  padding: 0;
+}
+
+main .section.pale-blue img {
+  width: 48px;
+  height: 50px;
+  flex-shrink: 0;
+}
+
+main .section.pale-blue p {
+  margin: 0;
+  font-size: var(--body-font-size-m);
+  line-height: 22px;
+}
+
+main .section.grey {
+  background-color: var(--color-bg-alert);
+  margin: 0;
+  padding: 12px 0;
 }
