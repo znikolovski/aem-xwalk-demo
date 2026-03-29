@@ -42,7 +42,7 @@
   --heading-font-size-xs: 14px;
 
   /* spacing */
-  --section-padding: 48px 24px;
+  --section-padding: 48px 24px 24px;
   --section-gap: 0;
 
   /* nav heights */
@@ -79,13 +79,13 @@
     /* heading sizes — desktop */
     --heading-font-size-xxl: 40px;
     --heading-font-size-xl: 32px;
-    --heading-font-size-l: 30px;
+    --heading-font-size-l: 32px;
     --heading-font-size-m: 20px;
     --heading-font-size-s: 16px;
     --heading-font-size-xs: 14px;
 
     /* section padding — desktop */
-    --section-padding: 64px 32px;
+    --section-padding: 64px 32px 32px;
   }
 }
 
@@ -498,7 +498,8 @@ main > .section > .default-content-wrapper {
 }
 
 /* hide footer diamond logo that was imported into footnotes section */
-main > .section.dark > .default-content-wrapper > p:has(> img[src*="cba-diamond"]) {
+/* stylelint-disable-next-line no-descending-specificity */
+main > .section > .default-content-wrapper > p:has(img[src*="cba-diamond"]) {
   display: none;
 }
 

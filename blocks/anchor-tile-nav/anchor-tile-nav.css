@@ -1,3 +1,10 @@
+/* When anchor-tile-nav is in the same section as the hero, ensure it
+   sits above the hero image layer (z-index: 0). */
+.hero-container .anchor-tile-nav-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
 .section.anchor-tile-nav-container > .default-content-wrapper {
   display: none;
 }
@@ -81,11 +88,75 @@
   color: var(--cba-link-blue);
 }
 
+/* Compact variant (product page section-navigation): icon-above-label tiles */
+.anchor-tile-nav-compact {
+  text-align: center;
+  padding: 16px 12px;
+  border-right: 1px solid var(--cba-divider, #e9e9e9);
+}
+
+.anchor-tile-nav-compact:last-child {
+  border-right: none;
+}
+
+.anchor-tile-nav-compact .anchor-tile-nav-icon {
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+.anchor-tile-nav-compact .anchor-tile-nav-icon img {
+  width: 40px;
+  height: 40px;
+}
+
+/* Reset EDS auto-button styling on compact tile links */
+/* stylelint-disable-next-line no-descending-specificity */
+.anchor-tile-nav-compact .anchor-tile-nav-heading a,
+.anchor-tile-nav-compact .anchor-tile-nav-heading a.button {
+  font-size: var(--body-font-size-s);
+  font-weight: 400;
+  color: var(--cba-dark, #000);
+  text-decoration: none;
+  display: block;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.anchor-tile-nav-compact .anchor-tile-nav-heading a::after {
+  display: none;
+}
+
+.anchor-tile-nav-compact .anchor-tile-nav-heading a:hover,
+.anchor-tile-nav-compact .anchor-tile-nav-heading a.button:hover {
+  color: var(--cba-link-blue, #060);
+  text-decoration: underline;
+  background: none;
+  border: none;
+}
+
+/* When all tiles are compact, use 4-col grid on mobile, 8-col on desktop */
+.anchor-tile-nav:has(.anchor-tile-nav-compact) > ul {
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--cba-divider, #e9e9e9);
+  border-right: none;
+  background: var(--cba-white, #fff);
+}
+
 @media (width >= 600px) {
   .anchor-tile-nav > ul {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .anchor-tile-nav:has(.anchor-tile-nav-compact) > ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 @media (width >= 900px) {
@@ -93,8 +164,12 @@
     grid-template-columns: repeat(3, 1fr);
   }
 
+  .anchor-tile-nav:has(.anchor-tile-nav-compact) > ul {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
   /* icon + heading on same line via grid */
-  .anchor-tile-nav-tile {
+  .anchor-tile-nav-tile:not(.anchor-tile-nav-compact) {
     display: grid;
     grid-template-columns: 48px 1fr;
     grid-template-rows: auto auto;
@@ -104,7 +179,7 @@
   }
 
   /* icon in top-left */
-  .anchor-tile-nav-icon {
+  .anchor-tile-nav-tile:not(.anchor-tile-nav-compact) .anchor-tile-nav-icon {
     grid-column: 1;
     grid-row: 1;
     margin-bottom: 0;
@@ -114,14 +189,14 @@
   }
 
   /* heading aligned with icon */
-  .anchor-tile-nav-heading {
+  .anchor-tile-nav-tile:not(.anchor-tile-nav-compact) .anchor-tile-nav-heading {
     grid-column: 2;
     grid-row: 1;
     align-self: center;
   }
 
   /* links below heading, aligned with heading (column 2) */
-  .anchor-tile-nav-links {
+  .anchor-tile-nav-tile:not(.anchor-tile-nav-compact) .anchor-tile-nav-links {
     grid-column: 2;
     grid-row: 2;
   }

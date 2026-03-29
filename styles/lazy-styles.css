@@ -1,1 +1,1621 @@
 /* add global styles that can be loaded post LCP here */
+
+/* ====================================================================
+   Hub page styles — CSS improvements for non-homepage marketing pages
+   that lack section-metadata from import.
+   Uses :has() to detect content patterns. All rules guard against
+   matching homepage sections (which have proper .dark/.light classes).
+
+   On the original site, hub page footnotes and support sections use
+   a light background (#f4f4f4 body bg). Only the homepage has dark
+   treatment via explicit section-metadata classes.
+   ==================================================================== */
+
+/* --- Footnotes "Things you should know" — light theme for hub pages --- */
+
+/* Typography: small text, tighter line-height, constrained width */
+main > .section:not(.dark):has(> .default-content-wrapper > h2#things-you-should-know) > .default-content-wrapper > h2#things-you-should-know,
+main > .section:not(.dark):has(> .default-content-wrapper > h2#things-you-should-know) > .default-content-wrapper > h2#things-you-should-know ~ * {
+  font-size: var(--body-font-size-s);
+  line-height: 1.71;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main > .section:not(.dark):has(> .default-content-wrapper > h2#things-you-should-know) > .default-content-wrapper > h2#things-you-should-know {
+  font-size: var(--heading-font-size-s, 20px);
+  line-height: 1.4;
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--cba-divider, #e9e9e9);
+}
+
+/* When footnotes are in their own section (e.g., banking page), constrain width */
+main > .section:not(.dark):has(> .default-content-wrapper > h2#things-you-should-know):not(:has(> .promo-offer-banner-wrapper)) > div {
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+}
+
+/* --- "We're here to help" / "We can help" — support card grid --- */
+
+/* On original site these are on light background with 2x2 icon grid.
+   Target both heading variants across hub pages. */
+
+/* Shared grid styles for help sections */
+.default-content-wrapper:has(> h2#were-here-to-help) > ul,
+.default-content-wrapper:has(> h2#we-can-help) > ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.default-content-wrapper:has(> h2#were-here-to-help) > ul li,
+.default-content-wrapper:has(> h2#we-can-help) > ul li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.default-content-wrapper:has(> h2#were-here-to-help) > ul li img,
+.default-content-wrapper:has(> h2#we-can-help) > ul li img {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.default-content-wrapper:has(> h2#were-here-to-help) > ul li h3,
+.default-content-wrapper:has(> h2#we-can-help) > ul li h3 {
+  font-size: var(--body-font-size-m);
+  margin: 0 0 4px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.default-content-wrapper:has(> h2#were-here-to-help) > ul li p,
+.default-content-wrapper:has(> h2#we-can-help) > ul li p {
+  font-size: var(--body-font-size-s);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Heading bottom spacing */
+.default-content-wrapper:has(> h2#were-here-to-help) > h2,
+.default-content-wrapper:has(> h2#we-can-help) > h2 {
+  margin-bottom: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--cba-divider, #e9e9e9);
+}
+
+@media (width < 600px) {
+  .default-content-wrapper:has(> h2#were-here-to-help) > ul,
+  .default-content-wrapper:has(> h2#we-can-help) > ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Empty product-card block: collapse gracefully --- */
+.product-card-wrapper:has(> .product-card:empty) {
+  display: none;
+}
+
+/* --- Hub page promo-offer-banner in mixed sections --- */
+
+/* When promo-offer-banner is in a section with other content (not its own section),
+   ensure proper spacing between promo and default content */
+.promo-offer-banner-container .default-content-wrapper + .promo-offer-banner-wrapper,
+.promo-offer-banner-container .promo-offer-banner-wrapper + .default-content-wrapper {
+  margin-top: 32px;
+}
+
+/* --- Modal-apply inline content: hide imported modal flow ---
+   On the original site, "Get started" and "Refinance online" CTAs open modal
+   dialogs with existing/new customer paths. The import captures modal content
+   as inline text (Close x, Already a customer?, New customer?). Hide these
+   elements while keeping the real promo content and CTAs visible.
+   These headings only appear on product/hub pages, never on homepage. */
+
+/* Modal-flow headings (by unique ID prefix) —
+   home-buying: "Already a customer?" → already-a-customer
+   business:    "Already a CommBank customer?" → already-a-commbank-customer */
+.default-content-wrapper > h2[id^="already-a"],
+.default-content-wrapper > h2[id^="new-customer"],
+.default-content-wrapper > h2[id^="new-commbank"] {
+  display: none;
+}
+
+/* Description + button-container + "or" text after modal headings */
+/* stylelint-disable no-descending-specificity */
+.default-content-wrapper > h2[id^="already-a"] + p,
+.default-content-wrapper > h2[id^="already-a"] + p + p,
+.default-content-wrapper > h2[id^="already-a"] + p + p + p,
+.default-content-wrapper > h2[id^="new-customer"] + p,
+.default-content-wrapper > h2[id^="new-customer"] + p + p,
+.default-content-wrapper > h2[id^="new-commbank"] + p,
+.default-content-wrapper > h2[id^="new-commbank"] + p + p {
+  display: none;
+}
+/* stylelint-enable no-descending-specificity */
+
+/* "Close ×" paragraph immediately before modal heading */
+/* stylelint-disable-next-line no-descending-specificity */
+.default-content-wrapper > p:has(+ h2[id^="already-a"]) {
+  display: none;
+}
+
+/* "Close x" text after button-containers in sections with modal content */
+/* stylelint-disable-next-line no-descending-specificity */
+.section:has(h2[id^="already-a"]) .default-content-wrapper > p.button-container + p:not(.button-container, :has(img)) {
+  display: none;
+}
+
+/* ====================================================================
+   Rate display — large rate numbers on product hub pages
+   Pattern: h2 + p.button-container + ul (rate list) + p (footnote)
+   This pattern appears on home-loans, banking, etc. — NOT on homepage.
+   ==================================================================== */
+
+/* Rate list: horizontal flex layout with bottom divider */
+/* stylelint-disable-next-line no-descending-specificity */
+.section:not(.dark):has(> .default-content-wrapper > h2 + .button-container + ul) > .default-content-wrapper > ul {
+  list-style: none;
+  padding: 0 0 32px;
+  margin: 24px 0;
+  display: flex;
+  gap: 48px;
+  border-bottom: 1px solid var(--cba-divider, #e9e9e9);
+}
+
+/* Rate number: large typography */
+/* stylelint-disable-next-line no-descending-specificity */
+.section:not(.dark):has(> .default-content-wrapper > h2 + .button-container + ul) > .default-content-wrapper > ul li > p:first-child {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0;
+  color: var(--cba-dark, #000);
+}
+
+/* Rate label: body text below the number */
+/* stylelint-disable-next-line no-descending-specificity */
+.section:not(.dark):has(> .default-content-wrapper > h2 + .button-container + ul) > .default-content-wrapper > ul li > p:last-child {
+  font-size: var(--body-font-size-m);
+  margin: 4px 0 0;
+  font-weight: 400;
+}
+
+/* "Find out more" link: reset button to text link style */
+.section:not(.dark):has(> .default-content-wrapper > h2 + .button-container + ul) > .default-content-wrapper > .button-container a.button {
+  background: none;
+  border: none;
+  color: var(--cba-link-blue, #060);
+  padding: 0;
+  font-size: var(--body-font-size-m);
+  font-weight: 400;
+  text-decoration: none;
+  border-radius: 0;
+  margin: 0;
+}
+
+.section:not(.dark):has(> .default-content-wrapper > h2 + .button-container + ul) > .default-content-wrapper > .button-container a.button:hover {
+  text-decoration: underline;
+  background: none;
+}
+
+/* Footnote/disclaimer text after rate list */
+/* stylelint-disable-next-line no-descending-specificity */
+.section:not(.dark):has(> .default-content-wrapper > h2 + .button-container + ul) > .default-content-wrapper > ul + p {
+  font-size: var(--body-font-size-m);
+  line-height: 1.5;
+  color: var(--cba-dark, #1e1e1e);
+  margin-top: 16px;
+}
+
+/* --- "Home loan today / Holiday tomorrow" promo heading --- */
+
+/* Large promo heading in sections with article-cards (feature grid) */
+/* stylelint-disable-next-line no-descending-specificity */
+.section.article-cards-container:not(.dark) > .default-content-wrapper > h2:first-child {
+  font-size: var(--heading-font-size-xl, 36px);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+/* Promo description text */
+/* stylelint-disable-next-line no-descending-specificity */
+.section.article-cards-container:not(.dark) > .default-content-wrapper > h2:first-child + p {
+  font-size: var(--body-font-size-m);
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+/* Promo section buttons — ghost style by default */
+/* stylelint-disable-next-line no-descending-specificity */
+.default-content-wrapper:has(> h2#home-loan-todayholiday-tomorrow) > .button-container a.button {
+  display: inline-block;
+  border: 1px solid #706d6e;
+  border-radius: 24px;
+  padding: 12px 24px;
+  color: var(--cba-dark, #231f20);
+  text-decoration: none;
+  background: transparent;
+  font-size: var(--body-font-size-m);
+  line-height: 1.5;
+}
+
+/* "Get started" — yellow primary (first button after heading + description) */
+/* stylelint-disable-next-line no-descending-specificity */
+.default-content-wrapper:has(> h2#home-loan-todayholiday-tomorrow) > h2:first-child + p + .button-container a.button {
+  background: var(--cba-yellow);
+  border-color: var(--cba-yellow);
+}
+
+/* Feature grid icons — constrain when article-cards used as icon+text grid */
+/* stylelint-disable-next-line no-descending-specificity */
+.section.article-cards-container:not(.dark) .article-cards-image img {
+  width: auto;
+  max-height: 56px;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+/* Remove card padding when used as feature grid (no card background) */
+/* stylelint-disable-next-line no-descending-specificity */
+.section.article-cards-container:not(.dark) .article-cards-card {
+  background: transparent;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.section.article-cards-container:not(.dark) .article-cards-content {
+  padding: 12px 0 0;
+}
+
+/* Empty paragraphs in default-content-wrapper */
+/* stylelint-disable-next-line no-descending-specificity */
+.default-content-wrapper > p:empty {
+  display: none;
+}
+
+/* --- "Start your home buying journey" — 2-column CTA cards --- */
+
+/* stylelint-disable-next-line no-descending-specificity */
+.default-content-wrapper:has(> h2#start-your-home-buying-journey-with-us-today) > ul {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.default-content-wrapper:has(> h2#start-your-home-buying-journey-with-us-today) > ul li {
+  background: var(--cba-white, #fff);
+  border: 1px solid var(--cba-divider, #e9e9e9);
+  border-radius: 4px;
+  padding: 24px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.default-content-wrapper:has(> h2#start-your-home-buying-journey-with-us-today) > ul li h3 {
+  font-size: var(--heading-font-size-s, 20px);
+  font-weight: 800;
+  margin: 0 0 8px;
+  line-height: 1.3;
+}
+
+/* CTA buttons — override generic list-item button reset to yellow pills */
+/* stylelint-disable-next-line no-descending-specificity */
+.default-content-wrapper:has(> h2#start-your-home-buying-journey-with-us-today) > ul li > .button-container a.button {
+  display: inline-block;
+  padding: 12px 24px;
+  background: var(--cba-yellow, #fc0);
+  color: var(--cba-dark, #000);
+  border: 1px solid var(--cba-yellow, #fc0);
+  border-radius: 24px;
+  font-weight: 700;
+  font-size: var(--body-font-size-s);
+  text-decoration: none;
+  text-align: center;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.default-content-wrapper:has(> h2#start-your-home-buying-journey-with-us-today) > ul li > .button-container a.button:hover {
+  background: #e6b800;
+  border-color: #e6b800;
+  text-decoration: none;
+}
+
+/* --- "Get the home loans Key Facts Sheet" — 2-column layout --- */
+
+.default-content-wrapper:has(h2#get-the-home-loans-key-facts-sheet) > ul:first-of-type {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--cba-divider, #e9e9e9);
+  margin-bottom: 24px;
+}
+
+/* --- "Support" section — 3-column link lists --- */
+
+.default-content-wrapper:has(> h2#support) > h2#support + ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.default-content-wrapper:has(> h2#support) > h2#support + ul > li > h3 {
+  font-size: var(--heading-font-size-s, 20px);
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+
+.default-content-wrapper:has(> h2#support) > h2#support + ul > li > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* --- Feedback section: hide on hub pages --- */
+.default-content-wrapper > p:has(+ p + p > strong):last-of-type {
+  /* "Was the information on this page useful?" */
+}
+
+@media (width < 600px) {
+  .default-content-wrapper:has(> h2#start-your-home-buying-journey-with-us-today) > ul {
+    grid-template-columns: 1fr;
+  }
+
+  .default-content-wrapper:has(> h2#support) > h2#support + ul {
+    grid-template-columns: 1fr;
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  .default-content-wrapper:has(h2#get-the-home-loans-key-facts-sheet) > ul:first-of-type {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ====================================================================
+   General hub page patterns — shared across all marketing hub pages
+   These rules reset EDS auto-button styling and add card/grid layouts
+   for common content patterns (feature lists, support cards, tools grids).
+   ==================================================================== */
+/* stylelint-disable no-descending-specificity */
+
+/* --- Button reset for CTA links inside list items (h3 + p + cta pattern) ---
+   Hub pages have content lists with h3 headings + descriptions + CTA links.
+   EDS auto-decorates standalone <a> as .button (yellow pill). These should
+   be text links. Target list items that contain h3 (content cards, not nav). */
+.default-content-wrapper > ul > li > .button-container a.button,
+.default-content-wrapper > ul > li > p > a.button {
+  background: none;
+  border: none;
+  color: var(--cba-link-blue, #060);
+  padding: 0;
+  font-weight: 400;
+  text-decoration: none;
+  border-radius: 0;
+  margin: 0;
+  font-size: var(--body-font-size-s);
+  white-space: normal;
+  text-align: left;
+}
+
+.default-content-wrapper > ul > li > .button-container a.button:hover,
+.default-content-wrapper > ul > li > p > a.button:hover {
+  text-decoration: underline;
+  background: none;
+  border: none;
+}
+
+/* --- Flat content CTA links after h3 headings (tools/guidance pattern) ---
+   Banking page "Banking tools, guidance & support" uses h3 > a + p + p.button-container
+   pattern repeated in flat default content (not inside a list). */
+.default-content-wrapper > h3 + p + .button-container a.button,
+.default-content-wrapper > h3 + p + p + .button-container a.button {
+  background: none;
+  border: none;
+  color: var(--cba-link-blue, #060);
+  padding: 0;
+  font-weight: 400;
+  text-decoration: none;
+  border-radius: 0;
+  margin: 0;
+  font-size: var(--body-font-size-s);
+}
+
+.default-content-wrapper > h3 + p + .button-container a.button:hover,
+.default-content-wrapper > h3 + p + p + .button-container a.button:hover {
+  text-decoration: underline;
+  background: none;
+  border: none;
+}
+
+/* --- Additional button resets for deeper content patterns ---
+   Digital-banking has h3 + 3+ paragraphs + CTA.
+   Institutional has CTAs after bullet lists.
+   Also consecutive button-containers (e.g., "Get familiar" + "Log on to NetBank"). */
+.default-content-wrapper > h3 + p + p + p + .button-container a.button,
+.default-content-wrapper > .button-container + .button-container a.button,
+.default-content-wrapper > ul + .button-container a.button,
+.default-content-wrapper > ul + p + .button-container a.button {
+  background: none;
+  border: none;
+  color: var(--cba-link-blue, #060);
+  padding: 0;
+  font-weight: 400;
+  text-decoration: none;
+  border-radius: 0;
+  margin: 0;
+  font-size: var(--body-font-size-s);
+  white-space: normal;
+  text-align: left;
+}
+
+.default-content-wrapper > h3 + p + p + p + .button-container a.button:hover,
+.default-content-wrapper > .button-container + .button-container a.button:hover,
+.default-content-wrapper > ul + .button-container a.button:hover,
+.default-content-wrapper > ul + p + .button-container a.button:hover {
+  text-decoration: underline;
+  background: none;
+  border: none;
+}
+
+/* --- Icon images in flat content (pictograms before h3 headings) ---
+   Banking page "Banking tools" section has p > img (SVG icon) followed by h3.
+   Display icons at a consistent size with proper spacing. */
+.default-content-wrapper > p:has(> img[src*="pictogram"]) {
+  margin: 24px 0 8px;
+}
+
+.default-content-wrapper > p > img[src*="pictogram"] {
+  width: 48px;
+  height: 48px;
+}
+
+/* --- h2 + CTA in sections with help/support content below ---
+   Digital-banking has "Manage your business banking online" h2 + CTA,
+   followed by "We're here to help". Target via :has() to avoid homepage
+   "Get help" button (which IS a yellow CTA on the original site). */
+.default-content-wrapper:has(> h2#were-here-to-help) > h2:not(#were-here-to-help) + .button-container a.button,
+.default-content-wrapper:has(> h2#we-can-help) > h2:not(#we-can-help) + .button-container a.button {
+  background: none;
+  border: none;
+  color: var(--cba-link-blue, #060);
+  padding: 0;
+  font-weight: 400;
+  text-decoration: none;
+  border-radius: 0;
+  margin: 0;
+  font-size: var(--body-font-size-s);
+}
+
+.default-content-wrapper:has(> h2#were-here-to-help) > h2:not(#were-here-to-help) + .button-container a.button:hover,
+.default-content-wrapper:has(> h2#we-can-help) > h2:not(#we-can-help) + .button-container a.button:hover {
+  text-decoration: underline;
+  background: none;
+  border: none;
+}
+
+/* --- Help section duplicate links: hide first child in each <li> ---
+   Import captures both an icon-link and a heading-link for each help item,
+   resulting in the title/link text appearing twice. The first child
+   (<a> on banking/home-buying/digital-banking, <p> on business) is the
+   duplicate. Homepage "We're here to help" uses divs (not <ul>), so safe. */
+.default-content-wrapper:has(> h2#were-here-to-help) > ul > li > a:first-child,
+.default-content-wrapper:has(> h2#we-can-help) > ul > li > a:first-child {
+  display: none;
+}
+
+.default-content-wrapper > h2#support-when-you-need-it + ul > li > a:first-child {
+  display: none;
+}
+
+/* Description links after h3 — reset to normal text */
+.default-content-wrapper:has(> h2#were-here-to-help) > ul li > h3 ~ a,
+.default-content-wrapper:has(> h2#we-can-help) > ul li > h3 ~ a {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  color: var(--text-color);
+  font-weight: 400;
+  font-size: var(--body-font-size-s);
+  text-decoration: none;
+  white-space: normal;
+  text-align: left;
+  display: block;
+  line-height: 1.5;
+}
+
+.default-content-wrapper:has(> h2#were-here-to-help) > ul li > h3 ~ a:hover,
+.default-content-wrapper:has(> h2#we-can-help) > ul li > h3 ~ a:hover {
+  text-decoration: underline;
+  background: none;
+  border: none;
+}
+
+/* --- "Support when you need it" (business page variant) ---
+   Same pattern as "We're here to help" but with different heading. */
+.default-content-wrapper:has(> h2#support-when-you-need-it) > ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.default-content-wrapper:has(> h2#support-when-you-need-it) > ul li > .button-container a.button,
+.default-content-wrapper:has(> h2#support-when-you-need-it) > ul li > a {
+  background: none;
+  border: none;
+  color: var(--cba-link-blue, #060);
+  padding: 0;
+  font-weight: 400;
+  text-decoration: none;
+  border-radius: 0;
+  margin: 0;
+  font-size: var(--body-font-size-s);
+  white-space: normal;
+  text-align: left;
+  display: block;
+}
+
+.default-content-wrapper:has(> h2#support-when-you-need-it) > ul li > .button-container a.button:hover,
+.default-content-wrapper:has(> h2#support-when-you-need-it) > ul li > a:hover {
+  text-decoration: underline;
+  background: none;
+  border: none;
+}
+
+.default-content-wrapper:has(> h2#support-when-you-need-it) > h2 {
+  margin-bottom: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--cba-divider, #e9e9e9);
+}
+
+/* --- "Things you should know" footnotes — multi-column fix ---
+   On digital-banking, the footnotes render in a multi-column table-like layout.
+   Ensure single-column small-text display.
+   Reset display:grid that leaks from help-section rules in shared wrappers. */
+main > .section:not(.dark):has(> .default-content-wrapper > h2#things-you-should-know) > .default-content-wrapper > h2#things-you-should-know ~ ul {
+  columns: 1;
+  font-size: var(--body-font-size-s);
+  line-height: 1.71;
+  display: block;
+  list-style: disc;
+  padding-left: 1.5em;
+}
+
+main > .section:not(.dark):has(> .default-content-wrapper > h2#things-you-should-know) > .default-content-wrapper > h2#things-you-should-know ~ ul li {
+  break-inside: avoid;
+  margin-bottom: 8px;
+}
+
+/* --- "We can help" duplicate links on insurance page ---
+   Insurance import captures icon+text as two <p><a> with same text.
+   Only target the list immediately after the h2 heading (not other lists
+   in the same wrapper like Hollard partnership or footnotes). */
+.default-content-wrapper > h2#we-can-help + ul > li:not(:has(h3)) > p:first-child {
+  display: none;
+}
+
+/* --- CBA footer logo/link in last section — hide on hub pages --- */
+.default-content-wrapper > p:has(> a[href="https://www.commbank.com.au/"] > img) {
+  display: none;
+}
+
+.default-content-wrapper > p:has(> a[href="https://www.commbank.com.au/"]):not(:has(img)) {
+  display: none;
+}
+
+@media (width < 600px) {
+  .default-content-wrapper:has(> h2#start-your-home-buying-journey-with-us-today) > ul {
+    grid-template-columns: 1fr;
+  }
+
+  .default-content-wrapper:has(> h2#support) > h2#support + ul {
+    grid-template-columns: 1fr;
+  }
+
+  .default-content-wrapper:has(h2#get-the-home-loans-key-facts-sheet) > ul:first-of-type {
+    grid-template-columns: 1fr;
+  }
+
+  .default-content-wrapper:has(> h2#support-when-you-need-it) > ul {
+    grid-template-columns: 1fr;
+  }
+
+  .default-content-wrapper:has(> h2#were-here-to-help) > ul,
+  .default-content-wrapper:has(> h2#we-can-help) > ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- "How-to guides & tips" + "Home loan support" — 2-column layout with dividers ---
+   On the original site, these appear as side-by-side layouts:
+   h2 left (~33%), description + CTA right (~67%), with horizontal dividers.
+   "Take me there" is a ghost button; "More on home loan support" is a text link. */
+
+/* stylelint-disable selector-id-pattern -- EDS auto-generates heading IDs with double dashes */
+
+/* Target the default-content-wrapper containing both heading IDs */
+.default-content-wrapper:has(> h2#how-to-guides--tips) {
+  padding-top: 16px;
+}
+
+/* Top divider before "How-to guides" */
+.default-content-wrapper:has(> h2#how-to-guides--tips) > h2#how-to-guides--tips {
+  padding-top: 32px;
+  border-top: 1px solid var(--cba-divider, #e9e9e9);
+}
+
+/* Bottom divider after guides ul, before "Home loan support" */
+.default-content-wrapper:has(> h2#how-to-guides--tips) > h2#home-loan-support {
+  padding-top: 32px;
+  border-top: 1px solid var(--cba-divider, #e9e9e9);
+  margin-top: 32px;
+}
+
+/* Remove bullet points from guide/support lists */
+.default-content-wrapper:has(> h2#how-to-guides--tips) > ul {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 32px;
+}
+
+/* "Take me there" — ghost button (border pill, no fill) */
+.default-content-wrapper:has(> h2#how-to-guides--tips) > h2#how-to-guides--tips + ul .button-container a.button {
+  display: inline-block;
+  border: 1px solid #706d6e;
+  border-radius: 24px;
+  padding: 8px 24px;
+  color: var(--cba-dark, #231f20);
+  text-decoration: none;
+  background: transparent;
+  font-size: var(--body-font-size-m);
+  font-weight: 400;
+}
+
+.default-content-wrapper:has(> h2#how-to-guides--tips) > h2#how-to-guides--tips + ul .button-container a.button:hover {
+  background: var(--cba-grey, #f5f5f5);
+  text-decoration: none;
+  border-color: #706d6e;
+}
+
+/* --- "Home Energy Upgrades" promo-offer-banner — hide duplicate label, text link CTA --- */
+
+/* The import creates a plain text "Explore Home Energy Upgrades" paragraph AND
+   a button link with the same text. Hide the plain text duplicate. */
+.promo-offer-banner-content:has(> h2#home-energy-upgrades) > p:not(.button-container, :has(img)):nth-child(3) {
+  display: none;
+}
+
+/* Make the "Explore Home Energy Upgrades" button a text link instead of yellow pill */
+.promo-offer-banner-content:has(> h2#home-energy-upgrades) > .button-container a.button {
+  background: none;
+  border: none;
+  color: var(--cba-link-blue, #060);
+  padding: 0;
+  font-weight: 400;
+  text-decoration: none;
+  border-radius: 0;
+  margin: 0;
+  font-size: var(--body-font-size-m);
+}
+
+.promo-offer-banner-content:has(> h2#home-energy-upgrades) > .button-container a.button:hover {
+  text-decoration: underline;
+  background: none;
+  border: none;
+}
+
+/* Bottom divider after Home Energy Upgrades promo */
+.promo-offer-banner-container > .promo-offer-banner-wrapper:first-child {
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--cba-divider, #e9e9e9);
+  margin-bottom: 0;
+}
+
+/* --- "Message us 24/7" promo — "CommBank app" should be ghost button, not yellow pill ---
+   On the original site, "CommBank app" is an inline text link within the paragraph
+   AND there's a separate "Message us" ghost button. The import makes "CommBank app"
+   a standalone button-container. Style it as a ghost button like the original. */
+.promo-offer-banner-content:has(> h2#message-us-247) > .button-container a.button {
+  background: transparent;
+  border: 1px solid #706d6e;
+  border-radius: 24px;
+  padding: 8px 24px;
+  color: var(--cba-dark, #231f20);
+  font-weight: 400;
+  font-size: var(--body-font-size-m);
+  text-decoration: none;
+}
+
+.promo-offer-banner-content:has(> h2#message-us-247) > .button-container a.button:hover {
+  background: var(--cba-grey, #f5f5f5);
+  text-decoration: none;
+  border-color: #706d6e;
+}
+
+/* --- "Get Key Facts Sheet" — ghost button (border pill, no fill) ---
+   On the original site, this is a ghost button matching the "Take me there"
+   pattern. The h2 is inside ul>li (not a direct child of wrapper).
+   The import renders it as a text link via the generic reset. */
+.default-content-wrapper:has(h2#get-the-home-loans-key-facts-sheet) > ul > li > .button-container a.button {
+  display: inline-block;
+  border: 1px solid #706d6e;
+  border-radius: 24px;
+  padding: 8px 24px;
+  color: var(--cba-dark, #231f20);
+  text-decoration: none;
+  background: transparent;
+  font-size: var(--body-font-size-m);
+  font-weight: 400;
+}
+
+.default-content-wrapper:has(h2#get-the-home-loans-key-facts-sheet) > ul > li > .button-container a.button:hover {
+  background: var(--cba-grey, #f5f5f5);
+  text-decoration: none;
+  border-color: #706d6e;
+}
+
+@media (width >= 900px) {
+  /* "How-to guides & tips" — 2-column (h2 left 1fr, content right 2fr) */
+  .default-content-wrapper:has(> h2#how-to-guides--tips) {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0;
+    align-items: start;
+  }
+
+  /* h2 headings in left column */
+  .default-content-wrapper:has(> h2#how-to-guides--tips) > h2#how-to-guides--tips {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* Guides content in right column */
+  .default-content-wrapper:has(> h2#how-to-guides--tips) > h2#how-to-guides--tips + ul {
+    grid-column: 2;
+    grid-row: 1;
+    padding-top: 32px;
+    border-top: 1px solid var(--cba-divider, #e9e9e9);
+  }
+
+  /* "Home loan support" heading in left column, row 2 */
+  .default-content-wrapper:has(> h2#how-to-guides--tips) > h2#home-loan-support {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  /* Support content in right column, row 2 */
+  .default-content-wrapper:has(> h2#how-to-guides--tips) > h2#home-loan-support + ul {
+    grid-column: 2;
+    grid-row: 2;
+    padding-top: 32px;
+    border-top: 1px solid var(--cba-divider, #e9e9e9);
+  }
+
+  /* Rate section: two-column grid (heading+link left, rates+disclaimer right) */
+  .section:not(.dark):has(> .default-content-wrapper > h2 + .button-container + ul) > .default-content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0;
+    align-items: start;
+  }
+
+  /* Left column: heading */
+  .section:not(.dark):has(> .default-content-wrapper > h2 + .button-container + ul) > .default-content-wrapper > h2 {
+    grid-column: 1;
+    grid-row: 1;
+    padding-right: 32px;
+  }
+
+  /* Left column: "Find out more" link */
+  .section:not(.dark):has(> .default-content-wrapper > h2 + .button-container + ul) > .default-content-wrapper > .button-container {
+    grid-column: 1;
+    grid-row: 2;
+    padding-right: 32px;
+  }
+
+  /* Right column: rates list — vertical divider via border-left */
+  .section:not(.dark):has(> .default-content-wrapper > h2 + .button-container + ul) > .default-content-wrapper > ul {
+    grid-column: 2;
+    grid-row: 1;
+    border-left: 1px solid var(--cba-divider, #e9e9e9);
+    padding-left: 32px;
+  }
+
+  /* Right column: disclaimer — continues vertical divider */
+  .section:not(.dark):has(> .default-content-wrapper > h2 + .button-container + ul) > .default-content-wrapper > ul + p {
+    grid-column: 2;
+    grid-row: 2;
+    border-left: 1px solid var(--cba-divider, #e9e9e9);
+    padding-left: 32px;
+    padding-top: 16px;
+  }
+
+  /* Rate numbers even larger on desktop */
+  .section:not(.dark):has(> .default-content-wrapper > h2 + .button-container + ul) > .default-content-wrapper > ul li > p:first-child {
+    font-size: 64px;
+  }
+
+  /* "We're here to help" / "We can help" — 4-column on desktop */
+  .default-content-wrapper:has(> h2#were-here-to-help) > ul,
+  .default-content-wrapper:has(> h2#we-can-help) > ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* "Home loan today" promo — two-column grid (text left 1/3, image right 2/3) */
+  .section.article-cards-container:not(.dark) > .default-content-wrapper:has(> h2#home-loan-todayholiday-tomorrow) {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0 48px;
+    align-items: start;
+  }
+
+  /* All promo content defaults to column 1 */
+  .section.article-cards-container:not(.dark) > .default-content-wrapper:has(> h2#home-loan-todayholiday-tomorrow) > * {
+    grid-column: 1;
+  }
+
+  /* Image paragraph → column 2, spanning promo rows */
+  .section.article-cards-container:not(.dark) > .default-content-wrapper:has(> h2#home-loan-todayholiday-tomorrow) > p:has(> img) {
+    grid-column: 2;
+    grid-row: 1 / span 5;
+    align-self: stretch;
+  }
+
+  .section.article-cards-container:not(.dark) > .default-content-wrapper:has(> h2#home-loan-todayholiday-tomorrow) > p:has(> img) img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* "Why choose CommBank?" heading — full width below promo */
+  .section.article-cards-container:not(.dark) > .default-content-wrapper:has(> h2#home-loan-todayholiday-tomorrow) > h2:not(:first-child) {
+    grid-column: 1 / -1;
+  }
+
+  /* Constrain promo description max-width within its grid cell */
+  .section.article-cards-container:not(.dark) > .default-content-wrapper:has(> h2#home-loan-todayholiday-tomorrow) > h2:first-child + p {
+    max-width: none;
+  }
+
+  /* "Start your home buying journey" — 3-column grid (h2 left, 2 CTAs right) */
+  .default-content-wrapper:has(> h2#start-your-home-buying-journey-with-us-today) {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0 24px;
+    align-items: start;
+  }
+
+  /* "See all" link — full width above grid */
+  .default-content-wrapper:has(> h2#start-your-home-buying-journey-with-us-today) > p:first-child {
+    grid-column: 1 / -1;
+    margin-bottom: 32px;
+  }
+
+  /* h2 heading — left column */
+  .default-content-wrapper:has(> h2#start-your-home-buying-journey-with-us-today) > h2 {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  /* CTA list — span columns 2-3, override to single-row layout */
+  .default-content-wrapper:has(> h2#start-your-home-buying-journey-with-us-today) > ul {
+    grid-column: 2 / -1;
+    grid-row: 2;
+  }
+
+  /* "Things you should know" — heading floated left for 2-column layout */
+  main > .section:not(.dark) > .default-content-wrapper > h2#things-you-should-know {
+    float: left;
+    width: 30%;
+    margin-right: 5%;
+    box-sizing: border-box;
+  }
+
+  /* All content after heading stays in right column via margin
+     (works for both <p> and <ul> content across all hub pages) */
+  main > .section:not(.dark) > .default-content-wrapper > h2#things-you-should-know ~ * {
+    margin-left: 35%;
+  }
+
+  main > .section:not(.dark) > .default-content-wrapper > h2#things-you-should-know ~ ul {
+    columns: unset;
+  }
+
+  /* Override flex shrink-wrap on footnotes li so content fills width */
+  main > .section:not(.dark) > .default-content-wrapper > h2#things-you-should-know ~ ul > li {
+    display: block;
+    width: 100%;
+  }
+
+  /* --- Banking page: "Banking for the stage you're at" — 4-column grid --- */
+  .default-content-wrapper > h2#banking-for-the-stage-youre-at + ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    list-style: none;
+    padding: 0;
+  }
+
+  /* --- Banking page: "Banking tools, guidance & support" — 4-column grid ---
+     The wrapper has flat siblings: h2, ul (stages), h2 (tools), then
+     [p(icon), h3, p, p.button-container] × 4 tools. Use the wrapper grid
+     with explicit column placement via nth-child. */
+  .default-content-wrapper:has(> h2#banking-tools-guidance--support) {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-flow: dense;
+    gap: 0 32px;
+  }
+
+  /* H2s and UL span full width */
+  .default-content-wrapper:has(> h2#banking-tools-guidance--support) > h2,
+  .default-content-wrapper:has(> h2#banking-tools-guidance--support) > ul {
+    grid-column: 1 / -1;
+  }
+
+  /* Tool 1 (children 4-7) → column 1 */
+  .default-content-wrapper:has(> h2#banking-tools-guidance--support) > :nth-child(n+4):nth-child(-n+7) {
+    grid-column: 1;
+  }
+
+  /* Tool 2 (children 8-11) → column 2 */
+  .default-content-wrapper:has(> h2#banking-tools-guidance--support) > :nth-child(n+8):nth-child(-n+11) {
+    grid-column: 2;
+  }
+
+  /* Tool 3 (children 12-15) → column 3 */
+  .default-content-wrapper:has(> h2#banking-tools-guidance--support) > :nth-child(n+12):nth-child(-n+15) {
+    grid-column: 3;
+  }
+
+  /* Tool 4 (children 16-19) → column 4 */
+  .default-content-wrapper:has(> h2#banking-tools-guidance--support) > :nth-child(n+16):nth-child(-n+19) {
+    grid-column: 4;
+  }
+
+  /* Tool icons: constrain size */
+  .default-content-wrapper > h2#banking-tools-guidance--support ~ p:has(> img) img {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* --- Banking page: access tiles (NetBank/Digital wallet/ATMs) — 3-column grid --- */
+  .default-content-wrapper:has(> ul > li > h3#netbank) > ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    list-style: none;
+    padding: 0;
+  }
+}
+/* stylelint-enable no-descending-specificity */
+
+/* stylelint-disable no-descending-specificity */
+
+/* --- Hero button: ghost/outline style on hub pages ---
+   On the original site, hub page heroes use a ghost "Book an appointment"
+   button (transparent bg, grey border) instead of the filled yellow style.
+   Homepage hero uses a filled yellow button with class .button only (no
+   secondary), so we target hub pages specifically using the anchor-tile-nav
+   block that only appears on hub sub-pages (not the homepage). */
+main > .section.hero-container:has(.anchor-tile-nav) .hero .hero-content a.button {
+  background: transparent;
+  border: 1px solid #706d6e;
+  color: var(--cba-dark);
+}
+
+main > .section.hero-container:has(.anchor-tile-nav) .hero .hero-content a.button:hover {
+  background: var(--cba-grey);
+}
+
+/* Primary button (e.g. "Get started") stays yellow filled on hub pages */
+main > .section.hero-container:has(.anchor-tile-nav) .hero .hero-content a.button.primary {
+  background: var(--cba-yellow);
+  border: 1px solid var(--cba-yellow);
+  color: var(--cba-dark);
+}
+
+main > .section.hero-container:has(.anchor-tile-nav) .hero .hero-content a.button.primary:hover {
+  background: #e6b800;
+  border-color: #e6b800;
+}
+
+/* =================================================================
+   INSURANCE PAGE — hub-specific layout fixes
+   ================================================================= */
+
+/* --- "Why choose" + "Health insurance" wrapper — lift above hero bleed ---
+   These live in the same section as the hero. The hero bleed (margin-bottom: -350px)
+   covers them. Give the wrapper white bg + z-index to sit on top. */
+.section.hero-container > .default-content-wrapper:has(> h2#why-choose-insurance-distributed-by-commbank) {
+  position: relative;
+  z-index: 1;
+  background: var(--background-color, #f4f4f4);
+  padding: 32px 0;
+  border-top: 1px solid var(--cba-divider, #e9e9e9);
+}
+
+/* --- "Why choose insurance distributed by CommBank?" — 3-column grid ---
+   Original has 3 feature columns: Trusted providers | Cover in one place | Flexible options.
+   The ul follows the h2 and each li has h3 + p. */
+.default-content-wrapper > h2#why-choose-insurance-distributed-by-commbank + ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px 32px;
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 32px;
+}
+
+.default-content-wrapper > h2#why-choose-insurance-distributed-by-commbank + ul > li {
+  margin: 0;
+}
+
+/* --- "Health insurance – Limited time offer" — remove bullets ---
+   The h2 + ul pattern where the heading sits left and the offer details sit right. */
+.default-content-wrapper > h2#health-insurance--limited-time-offer + ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+}
+
+/* --- "Our Hollard partnership" — remove bullets --- */
+.default-content-wrapper > h2#our-hollard-partnership + ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* --- Product-card mini-only fix ---
+   When product-card has ONLY mini cards (no large cards), don't force minis to column 3.
+   Stack them nicely on the right side. */
+.product-card:not(:has(.product-card-large)):has(.product-card-mini) {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 360px;
+  margin-left: auto;
+}
+
+/* --- "Travel insurance" promo-offer-banner — hide the "~" footnote button ---
+   The ~ is a footnote reference that got imported as a button. Hide it. */
+.promo-offer-banner .button-container:has(a[title="~"]) {
+  display: none;
+}
+
+/* --- "Tools & support" — 3-column grid for the 3 items --- */
+.default-content-wrapper > h2#tools--support + ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 32px;
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 32px;
+}
+
+.default-content-wrapper > h2#tools--support + ul > li {
+  margin: 0;
+}
+
+.default-content-wrapper > h2#tools--support + ul > li > h3 {
+  font-size: var(--heading-font-size-s);
+  margin: 0 0 8px;
+}
+
+.default-content-wrapper > h2#tools--support + ul > li > p {
+  font-size: var(--body-font-size-s);
+  margin: 0 0 8px;
+}
+
+.default-content-wrapper > h2#tools--support + ul > li > ul {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+}
+
+.default-content-wrapper > h2#tools--support + ul > li > ul > li {
+  margin-bottom: 4px;
+}
+
+@media (width >= 900px) {
+  /* "Why choose" + "Health insurance" wrapper — 2-column grid at desktop.
+     The wrapper contains 4 children: h2#why-choose, ul (3-col), h2#health-insurance, ul (offer).
+     "Why choose" heading + ul span full width. "Health insurance" h2 left, ul right. */
+  .section.hero-container > .default-content-wrapper:has(> h2#why-choose-insurance-distributed-by-commbank) {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0 48px;
+  }
+
+  /* "Why choose" heading — full width */
+  .default-content-wrapper > h2#why-choose-insurance-distributed-by-commbank {
+    grid-column: 1 / -1;
+  }
+
+  /* "Why choose" 3-col feature ul — full width */
+  .default-content-wrapper > h2#why-choose-insurance-distributed-by-commbank + ul {
+    grid-column: 1 / -1;
+  }
+
+  /* "Health insurance" h2 — left column */
+  .default-content-wrapper > h2#health-insurance--limited-time-offer {
+    grid-column: 1;
+    padding-top: 32px;
+    border-top: 1px solid var(--cba-divider, #e9e9e9);
+  }
+
+  /* Health insurance offer ul — right column, same row */
+  .default-content-wrapper > h2#health-insurance--limited-time-offer + ul {
+    grid-column: 2;
+    padding-top: 32px;
+    border-top: 1px solid var(--cba-divider, #e9e9e9);
+  }
+
+  /* "Our Hollard partnership" — divider and spacing */
+  .default-content-wrapper:has(> h2#our-hollard-partnership) > h2#our-hollard-partnership {
+    border-top: 1px solid var(--cba-divider, #e9e9e9);
+    padding-top: 32px;
+    margin-top: 32px;
+  }
+}
+
+@media (width < 600px) {
+  .default-content-wrapper > h2#why-choose-insurance-distributed-by-commbank + ul {
+    grid-template-columns: 1fr;
+  }
+
+  .default-content-wrapper > h2#tools--support + ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =================================================================
+   INVESTING & SUPER PAGE — hub-specific layout fixes
+   ================================================================= */
+
+/* --- "New to investing or looking to learn more" — centered heading + ghost button --- */
+.default-content-wrapper:has(> h2#new-to-investing-or-looking-to-learn-more) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 48px 0;
+  border-top: 1px solid var(--cba-divider, #e9e9e9);
+}
+
+.default-content-wrapper > h2#new-to-investing-or-looking-to-learn-more {
+  margin-bottom: 24px;
+}
+
+/* --- "Want to get smarter with your super?" — centered heading + ghost button --- */
+.default-content-wrapper:has(> h2#want-to-get-smarter-with-your-super) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 48px 0;
+  border-top: 1px solid var(--cba-divider, #e9e9e9);
+}
+
+.default-content-wrapper > h2#want-to-get-smarter-with-your-super {
+  margin-bottom: 24px;
+}
+
+/* Hide broken empty button before "Want to get smarter" heading */
+.default-content-wrapper:has(> h2#want-to-get-smarter-with-your-super) > .button-container:first-child {
+  display: none;
+}
+
+/* --- Ghost button style for CTA links in these centered sections --- */
+.default-content-wrapper:has(> h2#new-to-investing-or-looking-to-learn-more) a.button,
+.default-content-wrapper:has(> h2#want-to-get-smarter-with-your-super) a.button {
+  background: transparent;
+  border: 2px solid var(--cba-dark, #000);
+  color: var(--cba-dark, #000);
+  border-radius: 24px;
+  padding: 10px 24px;
+  font-weight: 700;
+}
+
+.default-content-wrapper:has(> h2#new-to-investing-or-looking-to-learn-more) a.button:hover,
+.default-content-wrapper:has(> h2#want-to-get-smarter-with-your-super) a.button:hover {
+  background: var(--cba-dark, #000);
+  color: var(--cba-white, #fff);
+}
+
+/* --- "Find investments" section — mini cards as 3-col horizontal row --- */
+.section.product-card-container:has(> .default-content-wrapper > h2#find-investments-that-best-suit-your-needs) .product-card:not(:has(.product-card-large)):has(.product-card-mini) {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: none;
+  margin-left: 0;
+}
+
+.section.product-card-container:has(> .default-content-wrapper > h2#find-investments-that-best-suit-your-needs) .product-card-mini {
+  grid-column: auto;
+}
+
+/* --- Superannuation promo — hide "2" footnote button --- */
+.promo-offer-banner-content:has(> h2#superannuation) .button-container:has(a[title="2"]) {
+  display: none;
+}
+
+/* --- Hide "Was the information on this page useful?" feedback section --- */
+.default-content-wrapper:has(> h2#things-you-should-know) > p:first-child,
+.default-content-wrapper:has(> h2#things-you-should-know) > p:nth-child(2),
+.default-content-wrapper:has(> h2#things-you-should-know) > p:nth-child(3) {
+  display: none;
+}
+
+/* =================================================================
+   BUSINESS PAGE — hub-specific layout fixes
+   ================================================================= */
+
+/* --- Hero: hide duplicate "Explore" bare text paragraph --- */
+.hero-content:has(h2#business-banking) > div > p:not(.button-container) {
+  display: none;
+}
+
+/* --- "Start, run or grow your business" — divider above section --- */
+.section:has(> .default-content-wrapper > h2#start-run-or-grow-your-business-with-commbank) {
+  border-top: 1px solid var(--cba-divider, #e9e9e9);
+  padding-top: 48px;
+}
+
+/* --- "Latest offers" dark section — hide leaked modal-apply content --- */
+.section.dark .default-content-wrapper:has(> h2#latest-offers) > :has(+ h2#already-a-commbank-customer),
+.section.dark .default-content-wrapper:has(> h2#latest-offers) > h2#already-a-commbank-customer,
+.section.dark .default-content-wrapper:has(> h2#latest-offers) > h2#already-a-commbank-customer ~ * {
+  display: none;
+}
+
+/* --- "Support when you need it" — icon grid (matching "We're here to help" pattern) --- */
+.default-content-wrapper:has(> h2#support-when-you-need-it) > h2#support-when-you-need-it {
+  margin-bottom: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--cba-divider, #e9e9e9);
+}
+
+.default-content-wrapper:has(> h2#support-when-you-need-it) > h2#support-when-you-need-it + ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.default-content-wrapper:has(> h2#support-when-you-need-it) > h2#support-when-you-need-it + ul li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.default-content-wrapper:has(> h2#support-when-you-need-it) > h2#support-when-you-need-it + ul li img {
+  display: block;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.default-content-wrapper:has(> h2#support-when-you-need-it) > h2#support-when-you-need-it + ul li > p:has(img) {
+  margin: 0 0 8px;
+  line-height: 0;
+}
+
+.default-content-wrapper:has(> h2#support-when-you-need-it) > h2#support-when-you-need-it + ul li h3 {
+  font-size: var(--body-font-size-m);
+  margin: 0 0 4px;
+}
+
+.default-content-wrapper:has(> h2#support-when-you-need-it) > h2#support-when-you-need-it + ul li p {
+  font-size: var(--body-font-size-s);
+  line-height: 1.4;
+  margin: 0;
+}
+
+@media (width >= 900px) {
+  /* "Start, run or grow" — image left, content right */
+  .section:has(> .default-content-wrapper > h2#start-run-or-grow-your-business-with-commbank) > .default-content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 48px;
+    align-items: start;
+  }
+
+  .section:has(> .default-content-wrapper > h2#start-run-or-grow-your-business-with-commbank) > .default-content-wrapper > p:first-child {
+    grid-column: 1;
+    grid-row: 1 / -1;
+  }
+
+  .section:has(> .default-content-wrapper > h2#start-run-or-grow-your-business-with-commbank) > .default-content-wrapper > p:first-child img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .section:has(> .default-content-wrapper > h2#start-run-or-grow-your-business-with-commbank) > .default-content-wrapper > :not(p:first-child) {
+    grid-column: 2;
+  }
+
+  /* "Introducing Business Masterclass" — image left, content right */
+  .section.dark .default-content-wrapper:has(> h2#introducing-business-masterclass) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 48px;
+    align-items: center;
+  }
+
+  .section.dark .default-content-wrapper:has(> h2#introducing-business-masterclass) > p:first-child {
+    grid-column: 1;
+    grid-row: 1 / -1;
+  }
+
+  .section.dark .default-content-wrapper:has(> h2#introducing-business-masterclass) > p:first-child img {
+    width: 100%;
+    height: auto;
+  }
+
+  .section.dark .default-content-wrapper:has(> h2#introducing-business-masterclass) > :not(p:first-child) {
+    grid-column: 2;
+  }
+
+  /* "Need help" promo — text left, image right (flip row-reverse) */
+  .promo-offer-banner:has(.promo-offer-banner-content > h2#need-help-finding-the-right-solutions-for-your-business) > div {
+    flex-direction: row;
+  }
+
+  .promo-offer-banner:has(.promo-offer-banner-content > h2#need-help-finding-the-right-solutions-for-your-business) .promo-offer-banner-image {
+    margin-left: 0;
+    margin-right: -128px;
+  }
+
+  /* "Support when you need it" — 3 columns on desktop */
+  .default-content-wrapper:has(> h2#support-when-you-need-it) > h2#support-when-you-need-it + ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* =================================================================
+   DIGITAL-BANKING PAGE — hub-specific layout fixes
+   ================================================================= */
+
+/* --- "See more. Do more." — divider above + spacing --- */
+.default-content-wrapper:has(> h2#see-more-do-more-its-secure) {
+  border-top: 1px solid var(--cba-divider, #e9e9e9);
+  padding-top: 48px;
+}
+
+/* --- "It doesn't end there" — 3-column grid from UL --- */
+.default-content-wrapper:has(> h2#it-doesnt-end-there) > h2#it-doesnt-end-there {
+  margin-bottom: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--cba-divider, #e9e9e9);
+}
+
+.default-content-wrapper:has(> h2#it-doesnt-end-there) > h2#it-doesnt-end-there + ul {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+}
+
+.default-content-wrapper:has(> h2#it-doesnt-end-there) > h2#it-doesnt-end-there + ul li {
+  padding-top: 16px;
+  border-top: 1px solid var(--cba-divider, #e9e9e9);
+}
+
+.default-content-wrapper:has(> h2#it-doesnt-end-there) > h2#it-doesnt-end-there + ul li h3 {
+  margin: 0 0 8px;
+  font-size: var(--heading-font-size-m);
+  font-weight: 800;
+}
+
+.default-content-wrapper:has(> h2#it-doesnt-end-there) > h2#it-doesnt-end-there + ul li p {
+  font-size: var(--body-font-size-s);
+  line-height: 1.5;
+  margin: 0 0 8px;
+}
+
+/* --- Lifestyle images after "It doesn't end there" list — side by side --- */
+.default-content-wrapper:has(> h2#it-doesnt-end-there) > h2#it-doesnt-end-there + ul ~ p:has(> img) {
+  display: inline-block;
+  width: 50%;
+  margin: 0;
+  vertical-align: top;
+}
+
+.default-content-wrapper:has(> h2#it-doesnt-end-there) > h2#it-doesnt-end-there + ul ~ p:has(> img) img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* --- "Manage your business banking online" — grey CTA bar --- */
+.default-content-wrapper > h2#manage-your-business-banking-online {
+  background: var(--cba-grey, #f5f5f5);
+  padding: 32px 48px;
+  margin: 0 calc(-1 * var(--section-gutter-desktop, 32px));
+  text-align: center;
+  font-size: var(--heading-font-size-l);
+  font-weight: 800;
+}
+
+/* --- "We're here to help" on digital-banking — show icon links ---
+   The generic rule at line 520 hides li > a:first-child. On the digital-banking
+   page, the icon images are INSIDE these <a> elements (not in a <p>), so we need
+   to restore visibility. Scope by the "manage-your-business-banking-online" heading
+   that only exists on this page. */
+.default-content-wrapper:has(> h2#manage-your-business-banking-online) > h2#were-here-to-help + ul > li > a:first-child {
+  display: block;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 0 8px;
+  border-radius: 0;
+  line-height: 0;
+}
+
+.default-content-wrapper:has(> h2#manage-your-business-banking-online) > h2#were-here-to-help + ul > li > a:first-child img {
+  width: 48px;
+  height: 48px;
+  display: block;
+}
+
+@media (width >= 900px) {
+  /* "See more. Do more." — heading left, text right */
+  .default-content-wrapper:has(> h2#see-more-do-more-its-secure) {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 48px;
+    align-items: start;
+  }
+
+  .default-content-wrapper:has(> h2#see-more-do-more-its-secure) > h2#see-more-do-more-its-secure {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .default-content-wrapper:has(> h2#see-more-do-more-its-secure) > h2#see-more-do-more-its-secure + ul {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  /* "Freedom. Choice. Control." + product cards — all in column 1 / -1 to span full width */
+  .default-content-wrapper:has(> h2#see-more-do-more-its-secure) > h2#freedom-choice-control {
+    grid-column: 1 / -1;
+    margin-top: 32px;
+  }
+
+  .default-content-wrapper:has(> h2#see-more-do-more-its-secure) > h2#freedom-choice-control ~ * {
+    grid-column: 1 / -1;
+  }
+
+  /* "It doesn't end there" — 3 columns on desktop */
+  .default-content-wrapper:has(> h2#it-doesnt-end-there) > h2#it-doesnt-end-there + ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .default-content-wrapper:has(> h2#it-doesnt-end-there) > h2#it-doesnt-end-there + ul li {
+    border-top: none;
+    padding-top: 0;
+  }
+}
+
+/* =================================================================
+   INSTITUTIONAL PAGE — hub-specific layout fixes
+   ================================================================= */
+
+/* --- "Capability and scale" — divider above + spacing --- */
+.default-content-wrapper:has(> h2#capability-and-scale-to-support-your-organisation) {
+  border-top: 1px solid var(--cba-divider, #e9e9e9);
+  padding-top: 48px;
+}
+
+.default-content-wrapper:has(> h2#capability-and-scale-to-support-your-organisation) > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.default-content-wrapper:has(> h2#capability-and-scale-to-support-your-organisation) > ul li p {
+  font-size: var(--body-font-size-m);
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+/* --- LinkedIn "Follow us" — icon inline with text link, no bullet --- */
+.default-content-wrapper:has(> h2#things-you-should-know) > ul:first-child:has(a[href*="linkedin"]) {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+}
+
+.default-content-wrapper:has(> h2#things-you-should-know) > ul:first-child:has(a[href*="linkedin"]) li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.default-content-wrapper:has(> h2#things-you-should-know) > ul:first-child:has(a[href*="linkedin"]) li p {
+  margin: 0;
+}
+
+.default-content-wrapper:has(> h2#things-you-should-know) > ul:first-child:has(a[href*="linkedin"]) li p:first-child a {
+  display: block;
+  line-height: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+.default-content-wrapper:has(> h2#things-you-should-know) > ul:first-child:has(a[href*="linkedin"]) li p:first-child img {
+  width: 40px;
+  height: 40px;
+}
+
+.default-content-wrapper:has(> h2#things-you-should-know) > ul:first-child:has(a[href*="linkedin"]) li p:last-child a {
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  color: var(--link-color);
+  font-weight: 700;
+  font-size: var(--body-font-size-s);
+  text-decoration: none;
+}
+
+.default-content-wrapper:has(> h2#things-you-should-know) > ul:first-child:has(a[href*="linkedin"]) li p:last-child a:hover {
+  text-decoration: underline;
+}
+
+@media (width >= 900px) {
+  /* "Capability and scale" — heading left, text right */
+  .default-content-wrapper:has(> h2#capability-and-scale-to-support-your-organisation) {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 48px;
+    align-items: start;
+  }
+
+  .default-content-wrapper:has(> h2#capability-and-scale-to-support-your-organisation) > h2 {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .default-content-wrapper:has(> h2#capability-and-scale-to-support-your-organisation) > ul {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+/* stylelint-enable no-descending-specificity */

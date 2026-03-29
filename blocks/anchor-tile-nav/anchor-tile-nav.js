@@ -26,6 +26,16 @@ export default function decorate(block) {
         headingWrap.className = 'anchor-tile-nav-heading';
         headingWrap.append(heading);
         li.append(headingWrap);
+      } else {
+        // Variant B: simple link without heading tag (product page section-nav)
+        const link = contentCell.querySelector('a');
+        if (link) {
+          const headingWrap = document.createElement('div');
+          headingWrap.className = 'anchor-tile-nav-heading';
+          headingWrap.append(link);
+          li.append(headingWrap);
+          li.classList.add('anchor-tile-nav-compact');
+        }
       }
 
       const subLinks = contentCell.querySelector('ul');

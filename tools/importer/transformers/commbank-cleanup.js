@@ -10,6 +10,15 @@ const TransformHook = { beforeTransform: 'beforeTransform', afterTransform: 'aft
 
 export default function transform(hookName, element, payload) {
   if (hookName === TransformHook.beforeTransform) {
+    // Remove CommBank header/navigation and skip links
+    // CommBank uses div.commbank-header instead of <header> tag
+    WebImporter.DOMUtils.remove(element, [
+      '.skip-links-module',
+      '.commbank-header',
+      '.commbank-footer',
+      '.page-lockout',
+    ]);
+
     // Remove cookie/consent overlays (from captured DOM: .gdpr-banner, #onetrust)
     WebImporter.DOMUtils.remove(element, [
       '#onetrust-consent-sdk',

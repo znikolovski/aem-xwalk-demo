@@ -52,6 +52,12 @@ export default function transform(hookName, element, payload) {
 
     const sections = template.sections;
 
+    // Determine if this is the homepage (dark sections only apply to homepage)
+    const currentUrl = payload && payload.url ? payload.url : '';
+    const isHomepage = currentUrl === 'https://www.commbank.com.au/'
+      || currentUrl.endsWith('/index.html')
+      || currentUrl.replace(/\/$/, '') === 'https://www.commbank.com.au';
+
     // Process sections in reverse order to avoid position shifts
     for (let i = sections.length - 1; i >= 0; i--) {
       const section = sections[i];
@@ -69,7 +75,8 @@ export default function transform(hookName, element, payload) {
       if (!sectionEl) continue;
 
       // Add Section Metadata block if section has a style
-      if (section.style) {
+      // Only apply 'dark' style on the homepage — hub pages use light backgrounds
+      if (section.style && !(section.style === 'dark' && !isHomepage)) {
         const metaBlock = WebImporter.Blocks.createBlock(doc, {
           name: 'Section Metadata',
           cells: [['style', section.style]],

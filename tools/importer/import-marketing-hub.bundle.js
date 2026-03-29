@@ -1,25 +1,8 @@
 var CustomImportScript = (() => {
   var __defProp = Object.defineProperty;
-  var __defProps = Object.defineProperties;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-  var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
   var __getOwnPropNames = Object.getOwnPropertyNames;
-  var __getOwnPropSymbols = Object.getOwnPropertySymbols;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __propIsEnum = Object.prototype.propertyIsEnumerable;
-  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-  var __spreadValues = (a, b) => {
-    for (var prop in b || (b = {}))
-      if (__hasOwnProp.call(b, prop))
-        __defNormalProp(a, prop, b[prop]);
-    if (__getOwnPropSymbols)
-      for (var prop of __getOwnPropSymbols(b)) {
-        if (__propIsEnum.call(b, prop))
-          __defNormalProp(a, prop, b[prop]);
-      }
-    return a;
-  };
-  var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
   var __export = (target, all) => {
     for (var name in all)
       __defProp(target, name, { get: all[name], enumerable: true });
@@ -103,53 +86,78 @@ var CustomImportScript = (() => {
   // tools/importer/parsers/anchor-tile-nav.js
   function parse3(element, { document }) {
     const cells = [];
-    const tiles = element.querySelectorAll(".six-pack-links");
-    tiles.forEach((tile) => {
-      const icon = tile.querySelector(".items-head img");
-      const headingLink = tile.querySelector(".items-head h3 > a");
-      const subLinks = tile.querySelectorAll(".items-list ul li a");
-      const iconCell = document.createElement("div");
-      if (icon) {
-        const img = document.createElement("img");
-        img.src = icon.getAttribute("src");
-        img.alt = icon.getAttribute("alt") || "";
-        iconCell.append(img);
-      }
-      const contentCell = document.createElement("div");
-      if (headingLink) {
-        const h3 = document.createElement("h3");
-        const a = document.createElement("a");
-        a.href = headingLink.getAttribute("href");
-        let headingText = "";
-        const textSpan = tile.querySelector(".items-head h3 a div span:first-child") || tile.querySelector(".items-head h3 a div") || tile.querySelector(".items-head h3 a span:not(.icon)");
-        if (textSpan) {
-          headingText = textSpan.textContent.trim();
+    const isHomepageSixPack = element.querySelector(".six-pack-links");
+    const isSectionNav = element.querySelector(".section-navigation-module, ul.hyperlink-list");
+    if (isHomepageSixPack) {
+      const tiles = element.querySelectorAll(".six-pack-links");
+      tiles.forEach((tile) => {
+        const icon = tile.querySelector(".items-head img");
+        const headingLink = tile.querySelector(".items-head h3 > a");
+        const subLinks = tile.querySelectorAll(".items-list ul li a");
+        const iconCell = document.createElement("div");
+        if (icon) {
+          const img = document.createElement("img");
+          img.src = icon.getAttribute("src");
+          img.alt = icon.getAttribute("alt") || "";
+          iconCell.append(img);
         }
-        if (!headingText) {
-          const clone = headingLink.cloneNode(true);
-          clone.querySelectorAll("img, .icon, svg").forEach((el) => el.remove());
-          headingText = clone.textContent.trim();
-        }
-        a.textContent = headingText;
-        h3.append(a);
-        contentCell.append(h3);
-      }
-      if (subLinks.length > 0) {
-        const ul = document.createElement("ul");
-        subLinks.forEach((link) => {
-          const li = document.createElement("li");
+        const contentCell = document.createElement("div");
+        if (headingLink) {
+          const h3 = document.createElement("h3");
           const a = document.createElement("a");
-          a.href = link.getAttribute("href");
-          a.textContent = link.textContent.trim();
-          li.append(a);
-          ul.append(li);
-        });
-        contentCell.append(ul);
-      }
-      cells.push([iconCell, contentCell]);
-    });
-    const block = WebImporter.Blocks.createBlock(document, { name: "anchor-tile-nav", cells });
-    element.replaceWith(block);
+          a.href = headingLink.getAttribute("href");
+          let headingText = "";
+          const textSpan = tile.querySelector(".items-head h3 a div span:first-child") || tile.querySelector(".items-head h3 a div") || tile.querySelector(".items-head h3 a span:not(.icon)");
+          if (textSpan) {
+            headingText = textSpan.textContent.trim();
+          }
+          if (!headingText) {
+            const clone = headingLink.cloneNode(true);
+            clone.querySelectorAll("img, .icon, svg").forEach((el) => el.remove());
+            headingText = clone.textContent.trim();
+          }
+          a.textContent = headingText;
+          h3.append(a);
+          contentCell.append(h3);
+        }
+        if (subLinks.length > 0) {
+          const ul = document.createElement("ul");
+          subLinks.forEach((link) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = link.getAttribute("href");
+            a.textContent = link.textContent.trim();
+            li.append(a);
+            ul.append(li);
+          });
+          contentCell.append(ul);
+        }
+        cells.push([iconCell, contentCell]);
+      });
+    } else if (isSectionNav) {
+      const navLinks = element.querySelectorAll("ul.hyperlink-list > li > a");
+      navLinks.forEach((link) => {
+        const icon = link.querySelector("img");
+        const labelSpan = link.querySelector("span");
+        const iconCell = document.createElement("div");
+        if (icon) {
+          const img = document.createElement("img");
+          img.src = icon.getAttribute("src");
+          img.alt = "";
+          iconCell.append(img);
+        }
+        const contentCell = document.createElement("div");
+        const a = document.createElement("a");
+        a.href = link.getAttribute("href");
+        a.textContent = labelSpan ? labelSpan.textContent.trim() : link.textContent.trim();
+        contentCell.append(a);
+        cells.push([iconCell, contentCell]);
+      });
+    }
+    if (cells.length > 0) {
+      const block = WebImporter.Blocks.createBlock(document, { name: "anchor-tile-nav", cells });
+      element.replaceWith(block);
+    }
   }
 
   // tools/importer/parsers/promo-offer-banner.js
@@ -265,6 +273,44 @@ var CustomImportScript = (() => {
           p.textContent = text;
           contentCell.append(p);
         }
+      }
+      if (ctaLink) {
+        const p = document.createElement("p");
+        const a = document.createElement("a");
+        a.href = ctaLink.getAttribute("href");
+        a.textContent = ctaLink.textContent.trim();
+        p.append(a);
+        contentCell.append(p);
+      }
+      cells.push([imageCell, contentCell]);
+    });
+    const compareCards = element.querySelectorAll(".card-section > .carditem > .card.compare");
+    compareCards.forEach((card) => {
+      const img = card.querySelector(".img-container img");
+      const heading = card.querySelector(".card-header h3");
+      const featureList = card.querySelectorAll(".card-content ul li");
+      const ctaLink = card.querySelector(".card-cta a");
+      const imageCell = document.createElement("div");
+      if (img) {
+        const newImg = document.createElement("img");
+        newImg.src = img.getAttribute("src") || img.getAttribute("data-src");
+        newImg.alt = img.getAttribute("alt") || "";
+        imageCell.append(newImg);
+      }
+      const contentCell = document.createElement("div");
+      if (heading) {
+        const h3 = document.createElement("h3");
+        h3.textContent = heading.textContent.trim();
+        contentCell.append(h3);
+      }
+      if (featureList.length > 0) {
+        const ul = document.createElement("ul");
+        featureList.forEach((li) => {
+          const newLi = document.createElement("li");
+          newLi.textContent = li.textContent.trim();
+          ul.append(newLi);
+        });
+        contentCell.append(ul);
       }
       if (ctaLink) {
         const p = document.createElement("p");
@@ -436,6 +482,12 @@ var CustomImportScript = (() => {
   function transform(hookName, element, payload) {
     if (hookName === TransformHook.beforeTransform) {
       WebImporter.DOMUtils.remove(element, [
+        ".skip-links-module",
+        ".commbank-header",
+        ".commbank-footer",
+        ".page-lockout"
+      ]);
+      WebImporter.DOMUtils.remove(element, [
         "#onetrust-consent-sdk",
         ".gdpr-banner",
         '[class*="cookie"]'
@@ -552,6 +604,8 @@ var CustomImportScript = (() => {
     if (hookName === TransformHook2.afterTransform) {
       if (template.sections.length < 2) return;
       const sections = template.sections;
+      const currentUrl = payload && payload.url ? payload.url : "";
+      const isHomepage = currentUrl === "https://www.commbank.com.au/" || currentUrl.endsWith("/index.html") || currentUrl.replace(/\/$/, "") === "https://www.commbank.com.au";
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         const selectors = Array.isArray(section.selector) ? section.selector : [section.selector];
@@ -563,7 +617,7 @@ var CustomImportScript = (() => {
           }
         }
         if (!sectionEl) continue;
-        if (section.style) {
+        if (section.style && !(section.style === "dark" && !isHomepage)) {
           const metaBlock = WebImporter.Blocks.createBlock(doc, {
             name: "Section Metadata",
             cells: [["style", section.style]]
@@ -612,7 +666,7 @@ var CustomImportScript = (() => {
       },
       {
         name: "anchor-tile-nav",
-        instances: [".six-packs-module"]
+        instances: [".six-packs-module", ".section-navigation"]
       },
       {
         name: "promo-offer-banner",
@@ -651,7 +705,7 @@ var CustomImportScript = (() => {
       {
         id: "section-3",
         name: "Products and Services Navigation",
-        selector: ".homepage-six-pack",
+        selector: [".homepage-six-pack", ".section-navigation"],
         style: "light",
         blocks: ["anchor-tile-nav"],
         defaultContent: [".homepage-six-pack h2"]
@@ -711,9 +765,10 @@ var CustomImportScript = (() => {
     ...PAGE_TEMPLATE.sections && PAGE_TEMPLATE.sections.length > 1 ? [transform2] : []
   ];
   function executeTransformers(hookName, element, payload) {
-    const enhancedPayload = __spreadProps(__spreadValues({}, payload), {
+    const enhancedPayload = {
+      ...payload,
       template: PAGE_TEMPLATE
-    });
+    };
     transformers.forEach((transformerFn) => {
       try {
         transformerFn.call(null, hookName, element, enhancedPayload);

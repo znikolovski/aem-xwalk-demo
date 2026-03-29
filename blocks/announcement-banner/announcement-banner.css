@@ -21,7 +21,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 16px 64px;
+  gap: 16px;
+  padding: 16px 24px;
   color: var(--cba-white);
 }
 
@@ -52,6 +53,19 @@
 .announcement-banner a.button:hover {
   background: var(--cba-white);
   color: #4f4c4d;
+}
+
+/* dismiss link */
+a.announcement-banner-dismiss {
+  color: var(--cba-white);
+  font-size: var(--body-font-size-s);
+  font-weight: 700;
+  text-decoration: underline;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 0;
 }
 
 @media (width < 600px) {

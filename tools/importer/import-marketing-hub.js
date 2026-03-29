@@ -50,7 +50,7 @@ const PAGE_TEMPLATE = {
     },
     {
       name: 'anchor-tile-nav',
-      instances: ['.six-packs-module'],
+      instances: ['.six-packs-module', '.section-navigation'],
     },
     {
       name: 'promo-offer-banner',
@@ -89,7 +89,7 @@ const PAGE_TEMPLATE = {
     {
       id: 'section-3',
       name: 'Products and Services Navigation',
-      selector: '.homepage-six-pack',
+      selector: ['.homepage-six-pack', '.section-navigation'],
       style: 'light',
       blocks: ['anchor-tile-nav'],
       defaultContent: ['.homepage-six-pack h2'],
