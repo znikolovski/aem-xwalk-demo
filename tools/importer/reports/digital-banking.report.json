@@ -1,0 +1,12 @@
+{
+  "status": "success",
+  "url": "https://www.commbank.com.au/digital-banking.html",
+  "path": "digital-banking",
+  "timestamp": "2026-03-26T08:05:18.207Z",
+  "title": "Digital Banking - CommBank",
+  "template": "marketing-hub",
+  "blocks": [
+    "hero",
+    "promo-offer-banner"
+  ]
+}

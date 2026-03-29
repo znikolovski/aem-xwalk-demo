@@ -1,0 +1,82 @@
+/* announcement banner — fixed dark bar at bottom of viewport, inset from edges */
+.hero-container .announcement-banner-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 32px;
+  right: 32px;
+  width: auto;
+  max-width: none;
+  min-height: 80px;
+  z-index: 10000;
+  background: #4f4c4d;
+  color: var(--cba-white);
+  box-sizing: border-box;
+  flex-wrap: nowrap;
+  padding: 0;
+}
+
+/* row — centered flex layout */
+.announcement-banner > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px 24px;
+  color: var(--cba-white);
+}
+
+.announcement-banner p {
+  margin: 0;
+  color: var(--cba-white);
+  font-size: var(--body-font-size-s);
+  line-height: 1.5;
+}
+
+.announcement-banner a:any-link {
+  color: var(--cba-white);
+  font-weight: 700;
+}
+
+.announcement-banner a.button {
+  background: transparent;
+  border: 1px solid var(--cba-white);
+  color: var(--cba-white);
+  font-size: var(--body-font-size-s);
+  padding: 0 16px;
+  line-height: 32px;
+  white-space: nowrap;
+  margin: 0;
+  text-decoration: none;
+}
+
+.announcement-banner a.button:hover {
+  background: var(--cba-white);
+  color: #4f4c4d;
+}
+
+/* dismiss link */
+a.announcement-banner-dismiss {
+  color: var(--cba-white);
+  font-size: var(--body-font-size-s);
+  font-weight: 700;
+  text-decoration: underline;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+@media (width < 600px) {
+  .hero-container .announcement-banner-wrapper {
+    left: 16px;
+    right: 16px;
+  }
+
+  .announcement-banner > div {
+    padding: 16px 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}

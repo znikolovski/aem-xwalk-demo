@@ -5,33 +5,138 @@
 
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
 }
 
-.hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
-}
-
-.hero picture {
+.hero .hero-image {
   position: absolute;
-  z-index: -1;
   inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero .hero-image img {
+  width: calc(10rem + 100%);
+  height: calc(11.25rem + 100%);
+  max-width: none;
+  margin-left: -5rem;
+  margin-top: -5.625rem;
   object-fit: cover;
+  display: block;
+}
+
+.hero .hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 48px 24px;
+  min-height: 500px;
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  width: 100%;
   box-sizing: border-box;
 }
 
-.hero img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
+.hero .hero-content > div {
+  position: relative;
+  max-width: 400px;
+  background: var(--cba-white);
+  padding: 32px;
+  border-radius: 0;
+}
+
+.hero .hero-content > div::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 16px;
+  background: var(--cba-yellow);
+  border-radius: 0;
+}
+
+.hero .hero-content h1,
+.hero .hero-content h2 {
+  font-size: var(--heading-font-size-l);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--cba-dark);
+  margin-bottom: 12px;
+}
+
+.hero .hero-content p {
+  font-size: var(--body-font-size-s);
+  line-height: 1.5;
+  color: var(--cba-dark);
+  margin-bottom: 16px;
+}
+
+.hero .hero-content a.button {
+  margin: 8px 0 0;
 }
 
 @media (width >= 900px) {
   .hero {
-    padding: 40px 32px;
+    min-height: 640px;
+    margin-bottom: -180px;
+  }
+
+  .hero .hero-content {
+    justify-content: flex-start;
+    padding: 80px 0;
+    max-width: calc(var(--max-width-content) + 64px);
+    min-height: 640px;
+  }
+
+  .hero .hero-content > div {
+    max-width: 600px;
+    padding: 64px 48px;
+  }
+
+  .hero .hero-content > div::before {
+    top: 0;
+    bottom: 0;
+    right: auto;
+    height: auto;
+    width: 16px;
+    border-radius: 0;
+  }
+
+  .hero .hero-content h1,
+  .hero .hero-content h2 {
+    font-size: 40px;
+    line-height: 1.2;
+  }
+
+  .hero .hero-content p {
+    font-size: var(--body-font-size-m);
+  }
+
+  /* Hub pages: image on right half, white background on left.
+     Hub pages have anchor-tile-nav in the same section as the hero,
+     so the section gets the .anchor-tile-nav-container class. */
+  .anchor-tile-nav-container .hero {
+    background: var(--cba-white);
+  }
+
+  .anchor-tile-nav-container .hero .hero-image {
+    inset: 0 0 0 auto;
+    width: 60%;
+  }
+
+  .anchor-tile-nav-container .hero .hero-image img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
+
+  .anchor-tile-nav-container .hero .hero-content .button-container {
+    display: inline-block;
+    margin-right: 16px;
   }
 }

@@ -1,0 +1,9 @@
+{
+  "name": "announcement-banner",
+  "createdFrom": "custom-cba",
+  "createdForPage": "https://www.commbank.com.au/",
+  "createdDate": "2026-03-19",
+  "description": "Dark dismissible banner at top of page for rate changes, promos, and emergency alerts",
+  "visualCharacteristics": "Full-width dark bar (#231f20), white text, pill CTA button, dismiss link",
+  "usedOnTemplates": ["marketing-hub"]
+}

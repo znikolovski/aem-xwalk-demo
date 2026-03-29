@@ -161,6 +161,52 @@
     ]
   },
   {
+    "id": "anchor-tile-nav",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "icon",
+        "label": "Icon",
+        "description": "Category icon image"
+      },
+      {
+        "component": "text",
+        "name": "heading",
+        "label": "Category Heading",
+        "description": "Category name with link"
+      },
+      {
+        "component": "richtext",
+        "name": "subLinks",
+        "label": "Sub-Links",
+        "description": "List of 2-3 sub-category links"
+      }
+    ]
+  },
+  {
+    "id": "announcement-banner",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Announcement Text",
+        "description": "The announcement message to display"
+      },
+      {
+        "component": "aem-content",
+        "name": "ctaLink",
+        "label": "CTA Link",
+        "description": "Link for the call-to-action button"
+      },
+      {
+        "component": "text",
+        "name": "ctaText",
+        "label": "CTA Text",
+        "description": "Text for the call-to-action button"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
